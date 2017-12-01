@@ -4,7 +4,7 @@ import "../App.css";
 import GamesList from "./GamesList";
 import CreateGame from "./Creategame";
 import GameShowPage from "./GameShowPage.js";
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, Redirect, withRouter } from "react-router-dom";
 
 const url = "http://localhost:3001/api/v1";
 const postUrl = "http://localhost:3001/api/v1/users/1/createboardgame";
@@ -19,6 +19,10 @@ class App extends Component {
   }
 
   componentDidMount = () => {
+    this.fetchGames();
+  };
+
+  fetchGames = () => {
     fetch(`${url}/boardgames`)
       .then(res => res.json())
       .then(json => this.setState({ games: json }));
@@ -47,7 +51,15 @@ class App extends Component {
       body: JSON.stringify(body)
     })
       .then(resp => resp.json())
-      .then(json => console.log(json));
+      .then(json => this.handleRedirect(json));
+  };
+
+  handleRedirect = json => {
+    this.fetchGames();
+    if (json.error) {
+    } else {
+      this.props.history.push(`/boardgame/${json.info.slug}`);
+    }
   };
 
   render() {
@@ -77,20 +89,4 @@ class App extends Component {
   }
 }
 
-export default App;
-
-// <Route
-//             path="/paintings/:slug"
-//             render={props => {
-//               const painting = this.state.paintings.find(
-//                 pntg => pntg.slug === props.match.params.slug
-//               );
-//               console.log('painting', painting);
-//
-//               return painting ? (
-//                 <PaintingShow painting={painting} />
-//               ) : (
-//                 <h1>Loading...</h1>
-//               );
-//             }}
-//           />
+export default withRouter(App);

@@ -12,7 +12,8 @@ class CreateGame extends React.Component {
       image_url: "",
       wishlist: false,
       owned: false,
-      favorite: false
+      favorite: false,
+      redirect: false
     };
   }
 

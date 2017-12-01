@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Route, Switch, Redirect, withRouter } from "react-router-dom";
 
 class GamesCard extends Component {
   constructor() {
@@ -16,6 +17,10 @@ class GamesCard extends Component {
     });
   };
 
+  redirectToShow = () => {
+    this.props.history.push(`/boardgame/${this.props.game.game.slug}`);
+  };
+
   render() {
     return (
       <div className="card">
@@ -31,7 +36,10 @@ class GamesCard extends Component {
               </div>
             </div>
           </div>
-          <img src={this.props.game.game.image_url} />
+          <img
+            src={this.props.game.game.image_url}
+            onClick={this.redirectToShow}
+          />
         </div>
         <div className="content">
           <span className="right floated">
@@ -55,4 +63,4 @@ class GamesCard extends Component {
   }
 }
 
-export default GamesCard;
+export default withRouter(GamesCard);
