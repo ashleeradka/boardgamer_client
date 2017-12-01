@@ -3,9 +3,9 @@ import GamesCard from "./GamesCard";
 
 const GamesList = props => {
   const gamesListCards = props.games.map(game => {
-    return <GamesCard game={game} />;
+    return <GamesCard game={game} key={game.game.id} />;
   });
-  return <div className="cards">{gamesListCards}</div>;
+  return <div className="ui special cards">{gamesListCards}</div>;
 };
 
 export default GamesList;

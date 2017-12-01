@@ -18,24 +18,31 @@ class GamesCard extends Component {
 
   render() {
     return (
-      <div className="ui card">
+      <div className="card">
         <div className="content">
           <div className="right floated meta">Own</div>
-          {this.props.game.name}
+          {this.props.game.game.name}
         </div>
-        <div className="image">
-          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTTCFgQQLWFEHh4FYeU-ZfpVOxZ_i1_KXhqg-e1TeOvLIxIpoJ9" />
+        <div className="blurring dimmable image">
+          <div className="ui dimmer">
+            <div className="content">
+              <div className="center">
+                <div className="ui inverted button">Add friend</div>
+              </div>
+            </div>
+          </div>
+          <img src={this.props.game.game.image_url} />
         </div>
         <div className="content">
           <span className="right floated">
             <i className="heart outline like icon" />
-            17 likes
+            {this.props.game.likes}
           </span>
         </div>
         <div className="extra content">
           {this.state.clicked ? (
             <div onClick={this.handleClick.bind(this)} className="description">
-              AWESOME GAME DESCRIPTION
+              {this.props.game.game.description}
             </div>
           ) : (
             <div onClick={this.handleClick.bind(this)} className="description">

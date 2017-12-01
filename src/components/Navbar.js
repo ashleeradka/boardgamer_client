@@ -7,11 +7,14 @@ const Navbar = props => {
       <Link to="/" className="item">
         Home
       </Link>
-      <Link to="/boardgames" className="item">
+      <Link to="/" className="item">
         Games
       </Link>
       <Link to="/friends" className="item">
         Friends
+      </Link>
+      <Link to="/createGame" className="item">
+        Add new game
       </Link>
       <div className="right menu">
         <div className="item">
