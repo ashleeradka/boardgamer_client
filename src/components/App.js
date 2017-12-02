@@ -4,6 +4,7 @@ import "../App.css";
 import GamesList from "./GamesList";
 import CreateGame from "./Creategame";
 import GameShowPage from "./GameShowPage.js";
+import Login from "./Login.js";
 import { Route, Switch, Redirect, withRouter } from "react-router-dom";
 
 const url = "http://localhost:3001/api/v1";
@@ -54,6 +55,10 @@ class App extends Component {
       .then(json => this.handleRedirect(json));
   };
 
+  onLogin = form => {
+    console.log(form);
+  };
+
   handleRedirect = json => {
     this.fetchGames();
     if (json.error) {
@@ -84,6 +89,7 @@ class App extends Component {
             return <GameShowPage game={game} />;
           }}
         />
+        <Route path="/login" render={() => <Login onLogin={this.onLogin} />} />
       </div>
     );
   }

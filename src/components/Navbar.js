@@ -27,7 +27,9 @@ const Navbar = props => {
             <i className="search link icon" />
           </div>
         </div>
-        <a className="ui item">Logout</a>
+        <Link to="/login" className="item">
+          Login
+        </Link>
       </div>
     </div>
   );
