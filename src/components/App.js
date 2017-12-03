@@ -71,6 +71,7 @@ class App extends Component {
     }
   };
 
+  // THIS IS NEW CODE
   onLogin = form => {
     fetch(`${url}/auth`, {
       method: "POST",
@@ -89,9 +90,12 @@ class App extends Component {
           });
           localStorage.setItem("jwt", user.jwt);
           console.log(this.state);
+          this.findCurrentUser();
+          this.props.history.push(`/`);
+        } else {
+          alert("User name / password combination not found!");
         }
-      })
-      .then(() => this.findCurrentUser());
+      });
   };
 
   findCurrentUser = () => {
@@ -109,15 +113,27 @@ class App extends Component {
   };
 
   parseJwt(token) {
-    var base64Url = token.split(".")[1];
-    var base64 = base64Url.replace("-", "+").replace("_", "/");
+    const base64Url = token.split(".")[1];
+    const base64 = base64Url.replace("-", "+").replace("_", "/");
     return JSON.parse(window.atob(base64));
   }
+
+  handleLogout() {
+    localStorage.removeItem("jwt");
+    this.setState({ authorization: { user: {}, isLoggedIn: false } });
+    this.props.history.push(`/login`);
+  }
+
+  // END OF NEW CODE
 
   render() {
     return (
       <div className="App">
-        <Navbar handleSearch={this.handleSearch} />
+        <Navbar
+          handleSearch={this.handleSearch}
+          userInfo={this.state.authorization}
+          handleLogout={this.handleLogout.bind(this)}
+        />
         <Route
           exact
           path="/"
