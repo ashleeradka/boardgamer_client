@@ -17,13 +17,24 @@ class GameShowPage extends React.Component {
               {this.props.game.likes} Likes
             </span>
           </h1>
-          <br />
-        </div>
-        <div className="ui ">
-          <img
-            className="ui centered medium image"
-            src={this.props.game.game.image_url}
-          />
+        </div>{" "}
+        <br />
+        <img
+          className="ui centered medium image"
+          src={this.props.game.game.image_url}
+        />{" "}
+        <br />
+        <div id="gameInfo" className="ui segments">
+          <div className="ui secondary segment">
+            <h4 className="ui header">Description</h4>
+            <div className="ui segment">
+              <p>{this.props.game.game.description}</p>
+            </div>
+            <span className="right floated">
+              <i className="heart outline like icon" />
+              {this.props.game.likes} likes
+            </span>
+          </div>
         </div>
       </div>
     );
