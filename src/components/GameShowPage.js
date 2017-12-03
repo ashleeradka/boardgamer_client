@@ -10,10 +10,16 @@ class GameShowPage extends React.Component {
     }
     return (
       <div>
-        <h1 className="ui center aligned header">
-          {this.props.game.game.name}
-        </h1>
-        <div className="ui segment">
+        <div>
+          <h1 className="ui center aligned header">
+            {this.props.game.game.name}
+            <span className="sub header center aligned">
+              {this.props.game.likes} Likes
+            </span>
+          </h1>
+          <br />
+        </div>
+        <div className="ui ">
           <img
             className="ui centered medium image"
             src={this.props.game.game.image_url}

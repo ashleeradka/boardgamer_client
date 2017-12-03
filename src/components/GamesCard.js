@@ -17,6 +17,21 @@ class GamesCard extends Component {
     });
   };
 
+  handleAddToCollection = e => {
+    console.log(this.props.game);
+    // if user post to add to user collection else link to create profile
+  };
+
+  handleLike = e => {
+    console.log(this.props.game.likes);
+    // post to game for likes and user likes if user exists
+  };
+
+  handleWish = e => {
+    console.log(this.props.game);
+    // if user exists post to add game to collection as wish
+  };
+
   redirectToShow = () => {
     this.props.history.push(`/boardgame/${this.props.game.game.slug}`);
   };
@@ -28,12 +43,18 @@ class GamesCard extends Component {
           {this.state.clicked ? (
             <div className="content fluid">
               <div className="header">{this.props.game.game.name}</div>
-              <i className="right floated like icon" />
-              <i className="right floated star icon" />
+              <i
+                className="right floated like icon"
+                onClick={this.handleLike.bind(this)}
+              />
+              <i
+                className="right floated star icon"
+                onClick={this.handleWish.bind(this)}
+              />
               <div className="left floated meta">
-                <span onClick={this.redirectToShow} className="meta">
+                <a onClick={this.redirectToShow} className="meta">
                   Click for more info...
-                </span>
+                </a>
               </div>
 
               <div
@@ -58,7 +79,10 @@ class GamesCard extends Component {
             </div>
           )}
           <div className="extra content">
-            <div className="ui bottom attached button">
+            <div
+              onClick={this.handleAddToCollection.bind(this)}
+              className="ui bottom attached button"
+            >
               <i className="add icon" />
               Add to collection
             </div>
