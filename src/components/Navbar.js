@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 
 const Navbar = props => {
+  const userInfo = props.userInfo;
+  console.log(userInfo);
   return (
     <div className="ui secondary  menu">
       <Link to="/" className="item">
@@ -10,12 +12,17 @@ const Navbar = props => {
       <Link to="/" className="item">
         Games
       </Link>
-      <Link to="/friends" className="item">
-        Friends
-      </Link>
-      <Link to="/createGame" className="item">
-        Add new game
-      </Link>
+      {userInfo.isLoggedIn ? (
+        <Link to="/friends" className="item">
+          Friends
+        </Link>
+      ) : null}
+
+      {userInfo.isLoggedIn ? (
+        <Link to="/createGame" className="item">
+          Add new game
+        </Link>
+      ) : null}
       <div className="right menu">
         <div className="item">
           <div className="ui icon input">
@@ -27,7 +34,21 @@ const Navbar = props => {
             <i className="search link icon" />
           </div>
         </div>
-        <a className="ui item">Logout</a>
+        {userInfo.isLoggedIn ? (
+          <a className="item">
+            <div
+              onClick={() => {
+                props.handleLogout();
+              }}
+            >
+              Logout
+            </div>
+          </a>
+        ) : (
+          <Link to="/login" className="item">
+            Login
+          </Link>
+        )}
       </div>
     </div>
   );
