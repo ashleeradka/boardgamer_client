@@ -13,7 +13,12 @@ div.centered.content.fluid.image > img {
   height: 300px;
 }
 
-fragment {
+#root > div > div.ui.cards {
+  margin: auto;
+  width: 92%;
+}
+
+#card {
   margin: 1%;
 }
 

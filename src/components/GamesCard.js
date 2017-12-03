@@ -38,7 +38,7 @@ class GamesCard extends Component {
 
   render() {
     return (
-      <fragment>
+      <div id="card">
         <div className="ui card">
           {this.state.clicked ? (
             <div className="content fluid">
@@ -88,7 +88,7 @@ class GamesCard extends Component {
             </div>
           </div>
         </div>
-      </fragment>
+      </div>
     );
   }
 }
