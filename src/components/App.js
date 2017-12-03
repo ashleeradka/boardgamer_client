@@ -5,6 +5,7 @@ import GamesList from "./GamesList";
 import CreateGame from "./Creategame";
 import GameShowPage from "./GameShowPage.js";
 import Login from "./Login.js";
+// import { authorizer } from "./Apilogin.js";
 import { Route, Switch, Redirect, withRouter } from "react-router-dom";
 
 const url = "http://localhost:3001/api/v1";
@@ -56,7 +57,17 @@ class App extends Component {
   };
 
   onLogin = form => {
-    console.log(form);
+    fetch(`${url}/auth`, {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+        accept: "application/json",
+        Authorization: localStorage.getItem("jwt")
+      },
+      body: JSON.stringify(form)
+    })
+      .then(res => res.json())
+      .then(json => console.log(json));
   };
 
   handleRedirect = json => {
