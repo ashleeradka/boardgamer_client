@@ -19,4 +19,11 @@ fragment {
 
 p {
   height: 250px;
+  text-align: center;
+  font-size: 15px;
+}
+
+#gameInfo {
+  width: 65%;
+  margin: auto;
 }
