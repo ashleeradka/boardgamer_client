@@ -16,12 +16,19 @@ class App extends Component {
 
     this.state = {
       games: [],
-      searchTerm: ""
+      searchTerm: "",
+      authorization: {
+        loggedIn: false,
+        user: {}
+      }
     };
   }
 
   componentDidMount = () => {
     this.fetchGames();
+    if (localStorage.getItem("jwt")) {
+      this.findCurrentUser();
+    }
   };
 
   fetchGames = () => {
@@ -56,6 +63,14 @@ class App extends Component {
       .then(json => this.handleRedirect(json));
   };
 
+  handleRedirect = json => {
+    this.fetchGames();
+    if (json.error) {
+    } else {
+      this.props.history.push(`/boardgame/${json.info.slug}`);
+    }
+  };
+
   onLogin = form => {
     fetch(`${url}/auth`, {
       method: "POST",
@@ -67,16 +82,37 @@ class App extends Component {
       body: JSON.stringify(form)
     })
       .then(res => res.json())
-      .then(json => console.log(json));
+      .then(user => {
+        if (!user.error) {
+          this.setState({
+            authorization: { isLoggedIn: true, user: user }
+          });
+          localStorage.setItem("jwt", user.jwt);
+          console.log(this.state);
+        }
+      })
+      .then(() => this.findCurrentUser());
   };
 
-  handleRedirect = json => {
-    this.fetchGames();
-    if (json.error) {
-    } else {
-      this.props.history.push(`/boardgame/${json.info.slug}`);
-    }
+  findCurrentUser = () => {
+    return fetch(`${url}/current_user`, {
+      headers: {
+        "content-type": "application/json",
+        accept: "application/json",
+        Authorization: this.parseJwt(localStorage.getItem("jwt")).user_id
+      }
+    })
+      .then(res => res.json())
+      .then(json =>
+        this.setState({ authorization: { user: json, isLoggedIn: true } })
+      );
   };
+
+  parseJwt(token) {
+    var base64Url = token.split(".")[1];
+    var base64 = base64Url.replace("-", "+").replace("_", "/");
+    return JSON.parse(window.atob(base64));
+  }
 
   render() {
     return (
