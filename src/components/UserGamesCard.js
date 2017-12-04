@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Route, Switch, Redirect, withRouter } from "react-router-dom";
 
-class GamesCard extends Component {
+class UserGamesCard extends Component {
   constructor() {
     super();
 
@@ -15,28 +15,6 @@ class GamesCard extends Component {
     this.setState({
       clicked: newState
     });
-  };
-
-  handleAddToCollection = e => {
-    if (!!this.props.user.user_info) {
-      const userId = this.props.user.user_info.id;
-      const game = this.props.game.game;
-
-      let postUrl = `http://localhost:3001/api/v1/addtocollection`;
-
-      fetch(postUrl, {
-        method: "POST",
-        headers: new Headers({
-          Accept: "application/json",
-          "Content-Type": "application/json"
-        }),
-        body: JSON.stringify({ game: game, user_id: userId })
-      })
-        .then(resp => console.log(resp))
-        .then(() => this.props.history.push("./mygames"));
-    } else {
-      this.props.history.push(`/login`);
-    }
   };
 
   handleLike = e => {
@@ -53,14 +31,28 @@ class GamesCard extends Component {
     this.props.history.push(`/boardgame/${this.props.game.game.slug}`);
   };
 
+  handleRemove = () => {
+    // console.log(this.props.game.id);
+    // console.log(this.props.info.user_id);
+    // fetch(postUrl, {
+    //   method: "POST",
+    //   headers: new Headers({
+    //     Accept: "application/json",
+    //     "Content-Type": "application/json"
+    //   }),
+    //   body: JSON.stringify({ game_id: this.props.game.id, user_id: this.props.info.user_id })
+    // }).then(resp => console.log(resp));
+  };
+
   render() {
+    console.log(this.props);
     return (
       <div id="card">
         <div className="ui card">
           {this.state.clicked ? (
             <div className="content fluid">
               <div className="header">
-                <a onClick={this.redirectToShow}>{this.props.game.game.name}</a>
+                <a onClick={this.redirectToShow}>{this.props.game.name}</a>
               </div>
               <i
                 className="right floated like icon"
@@ -84,7 +76,7 @@ class GamesCard extends Component {
                   {" "}
                   <br />
                   <br />
-                  <p>{this.props.game.game.description.slice(0, 400)}...</p>
+                  <p>{this.props.game.description.slice(0, 400)}...</p>
                   <p />
                 </div>
               </div>
@@ -94,16 +86,13 @@ class GamesCard extends Component {
               className="centered content fluid image"
               onClick={this.handleClick.bind(this)}
             >
-              <img src={this.props.game.game.image_url} />
+              <img src={this.props.game.image_url} />
             </div>
           )}
           <div className="extra content">
-            <div
-              onClick={this.handleAddToCollection.bind(this)}
-              className="ui bottom attached button"
-            >
-              <i className="add icon" />
-              Add to collection
+            <div className="ui red button" onClick={this.handleRemove}>
+              <i className="minus icon" />
+              Remove
             </div>
           </div>
         </div>
@@ -112,4 +101,4 @@ class GamesCard extends Component {
   }
 }
 
-export default withRouter(GamesCard);
+export default withRouter(UserGamesCard);

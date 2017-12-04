@@ -12,6 +12,12 @@ const Navbar = props => {
         Games
       </Link>
       {userInfo.isLoggedIn ? (
+        <Link to="/mygames" className="item">
+          My Games
+        </Link>
+      ) : null}
+
+      {userInfo.isLoggedIn ? (
         <Link to="/friends" className="item">
           Friends
         </Link>
