@@ -8,10 +8,12 @@ import Login from "./Login.js";
 // import { authorizer } from "./Apilogin.js";
 import { Route, Switch, Redirect, withRouter } from "react-router-dom";
 import CreateUser from "./CreateUser";
+import UserCollection from "./UserCollection";
 
 const url = "http://localhost:3001/api/v1";
 const postUrl = "http://localhost:3001/api/v1/users/1/createboardgame";
 const createUserUrl = "http://localhost:3001/api/v1/users/create";
+const getUserUrl = "http://localhost:3001/api/v1/users/:id";
 
 class App extends Component {
   constructor() {
@@ -23,7 +25,8 @@ class App extends Component {
       authorization: {
         loggedIn: false,
         user: {}
-      }
+      },
+      user_games: []
     };
   }
 
@@ -144,10 +147,29 @@ class App extends Component {
   };
 
   handleUserRedirect = json => {
-    if (json.error) {
+    if (!json.error) {
     } else {
       this.props.history.push(`/login`);
     }
+  };
+
+  userCollection = userId => {
+    fetch(`${url}/users/${userId}`)
+      .then(res => res.json())
+      .then(json => this.handleCollection(json));
+  };
+
+  handleCollection = json => {
+    this.setState(
+      {
+        user_games: json
+      },
+      json => this.getUserCollection()
+    );
+  };
+
+  getUserCollection = () => {
+    return this.state.user_games;
   };
   // END
 
@@ -162,11 +184,32 @@ class App extends Component {
         <Route
           exact
           path="/"
-          render={() => <GamesList games={this.getGames()} />}
+          render={() => (
+            <GamesList
+              userCollection={this.userCollection}
+              user={this.state.authorization.user}
+              games={this.getGames()}
+            />
+          )}
         />
         <Route
           path="/createGame"
-          render={() => <CreateGame onCreateGame={this.onCreateGame} />}
+          render={() => (
+            <CreateGame
+              user={this.state.authorization.user}
+              onCreateGame={this.onCreateGame}
+            />
+          )}
+        />
+        <Route
+          path="/mygames"
+          render={() => (
+            <UserCollection
+              user={this.state.authorization.user}
+              userCollection={() => this.userCollection.bind(this)}
+              games={this.getUserCollection()}
+            />
+          )}
         />
         <Route
           path="/boardgame/:slug"

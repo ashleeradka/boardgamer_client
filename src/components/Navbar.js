@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const Navbar = props => {
   const userInfo = props.userInfo;
-  console.log(userInfo);
+  // console.log(userInfo);
   return (
     <div className="ui secondary  menu">
       <Link to="/" className="item">
@@ -12,6 +12,12 @@ const Navbar = props => {
       <Link to="/" className="item">
         Games
       </Link>
+      {userInfo.isLoggedIn ? (
+        <Link to="/mygames" className="item">
+          My Games
+        </Link>
+      ) : null}
+
       {userInfo.isLoggedIn ? (
         <Link to="/friends" className="item">
           Friends
