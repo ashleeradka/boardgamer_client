@@ -9,7 +9,7 @@ import Loading from "./Loading.js";
 // import { authorizer } from "./Apilogin.js";
 import { Route, Switch, Redirect, withRouter } from "react-router-dom";
 import CreateUser from "./CreateUser";
-import UserCollection from "./UserCollection";
+import UserProfile from "./Userprofile";
 
 const url = "http://localhost:3001/api/v1";
 const postUrl = "http://localhost:3001/api/v1/users/1/createboardgame";
@@ -27,11 +27,7 @@ class App extends Component {
         loggedIn: false,
         user: {}
       },
-<<<<<<< HEAD
       error: ""
-=======
-      user_games: []
->>>>>>> 5b4cc4ce2a8c9da23df1888b30d1106ef57b6219
     };
   }
 
@@ -227,16 +223,7 @@ class App extends Component {
             />
           )}
         />
-        <Route
-          path="/mygames"
-          render={() => (
-            <UserCollection
-              user={this.state.authorization.user}
-              userCollection={() => this.userCollection.bind(this)}
-              games={this.getUserCollection()}
-            />
-          )}
-        />
+
         <Route
           path="/boardgame/:slug"
           render={props => {
@@ -261,9 +248,25 @@ class App extends Component {
             />
           )}
         />
+        <Route
+          path="/myprofile"
+          render={() => <UserProfile user={this.state.authorization.user} />}
+        />
       </div>
     );
   }
 }
 
 export default withRouter(App);
+
+// DEAD CODE USE IF NECESSARY
+// <Route
+//   path="/mygames"
+//   render={() => (
+//     <UserCollection
+//       user={this.state.authorization.user}
+//       userCollection={() => this.userCollection.bind(this)}
+//       games={this.getUserCollection()}
+//     />
+//   )}
+// />

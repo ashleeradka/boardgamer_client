@@ -8,9 +8,11 @@ const Navbar = props => {
       <Link to="/" className="item">
         Home
       </Link>
-      <Link to="/" className="item">
-        Games
-      </Link>
+      {userInfo.isLoggedIn ? (
+        <Link to="/myprofile" className="item">
+          My Profile
+        </Link>
+      ) : null}
       {userInfo.isLoggedIn ? (
         <Link to="/mygames" className="item">
           My Games
