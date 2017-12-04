@@ -43,7 +43,6 @@ class App extends Component {
       .then(res => res.json())
       .then(json => {
         this.setState({ games: json });
-        console.log(json);
       });
   };
 
@@ -60,8 +59,9 @@ class App extends Component {
   };
 
   onCreateGame = form => {
+    let userId = this.state.authorization.user.user_info.id;
     let body = { form };
-    fetch(postUrl, {
+    fetch(`${url}/users/${userId}/createboardgame`, {
       method: "POST",
       headers: new Headers({
         Accept: "application/json",
@@ -100,7 +100,6 @@ class App extends Component {
             error: ""
           });
           localStorage.setItem("jwt", user.jwt);
-          console.log(this.state);
           this.findCurrentUser();
           this.props.history.push(`/`);
         } else {
@@ -138,7 +137,7 @@ class App extends Component {
   // END OF NEW CODE
   // ASHLEE NEW CODE
   onCreateUser = form => {
-    let body = { form };
+    let body = { form: form };
     fetch(createUserUrl, {
       method: "POST",
       headers: new Headers({
@@ -153,7 +152,6 @@ class App extends Component {
 
   handleUserRedirect = json => {
     if (!json.error) {
-    } else {
       this.props.history.push(`/login`);
     }
   };
@@ -180,7 +178,6 @@ class App extends Component {
 
   getUserGames = () => {
     let games = [];
-    console.log(this.state);
     if (this.state.authorization.isLoggedIn) {
       this.state.authorization.user.user_games.map(user_game => {
         let gameInfo = this.state.games.filter(
@@ -189,9 +186,33 @@ class App extends Component {
         games.push(gameInfo[0]);
       });
     }
-    console.log(games);
     return games;
   };
+
+  handleAddToCollection(e) {
+    if (this.state.authorization.isLoggedIn) {
+      const userId = this.state.authorization.user.user_info.id;
+      const game = e.game;
+      let postUrl = `http://localhost:3001/api/v1/addtocollection`;
+
+      fetch(postUrl, {
+        method: "POST",
+        headers: new Headers({
+          Accept: "application/json",
+          "Content-Type": "application/json"
+        }),
+        body: JSON.stringify({ game: game, user_id: userId })
+      }).then(resp => this.checkResp(resp));
+    } else {
+      this.props.history.push(`/login`);
+    }
+  }
+
+  checkResp(resp) {
+    console.log(resp);
+    this.fetchGames();
+    this.findCurrentUser();
+  }
 
   render() {
     return (
@@ -211,6 +232,7 @@ class App extends Component {
             <GamesList
               games={this.getGames()}
               user={this.state.authorization.user}
+              onAddGame={this.handleAddToCollection.bind(this)}
             />
           )}
         />
@@ -219,7 +241,7 @@ class App extends Component {
           render={() => (
             <CreateGame
               user={this.state.authorization.user}
-              onCreateGame={this.onCreateGame}
+              onCreateGame={this.onCreateGame.bind(this)}
             />
           )}
         />

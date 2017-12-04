@@ -18,25 +18,7 @@ class GamesCard extends Component {
   };
 
   handleAddToCollection = e => {
-    if (!!this.props.user.user_info) {
-      const userId = this.props.user.user_info.id;
-      const game = this.props.game.game;
-
-      let postUrl = `http://localhost:3001/api/v1/addtocollection`;
-
-      fetch(postUrl, {
-        method: "POST",
-        headers: new Headers({
-          Accept: "application/json",
-          "Content-Type": "application/json"
-        }),
-        body: JSON.stringify({ game: game, user_id: userId })
-      })
-        .then(resp => console.log(resp))
-        .then(() => this.props.history.push("./mygames"));
-    } else {
-      this.props.history.push(`/login`);
-    }
+    this.props.onAddGame(this.props.game);
   };
 
   handleLike = e => {
@@ -99,7 +81,7 @@ class GamesCard extends Component {
           )}
           <div className="extra content">
             <div
-              onClick={this.handleAddToCollection.bind(this)}
+              onClick={this.handleAddToCollection}
               className="ui bottom attached button"
             >
               <i className="add icon" />

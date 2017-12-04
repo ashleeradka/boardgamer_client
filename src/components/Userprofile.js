@@ -5,7 +5,6 @@ class UserProfile extends React.Component {
     super();
   }
   render() {
-    console.log(this.props);
     if (!this.props.user.user_info) {
       return <div>loading...</div>;
     }
