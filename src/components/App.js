@@ -9,10 +9,12 @@ import Loading from "./Loading.js";
 // import { authorizer } from "./Apilogin.js";
 import { Route, Switch, Redirect, withRouter } from "react-router-dom";
 import CreateUser from "./CreateUser";
+import UserProfile from "./Userprofile";
 
 const url = "http://localhost:3001/api/v1";
 const postUrl = "http://localhost:3001/api/v1/users/1/createboardgame";
 const createUserUrl = "http://localhost:3001/api/v1/users/create";
+const getUserUrl = "http://localhost:3001/api/v1/users/:id";
 
 class App extends Component {
   constructor() {
@@ -39,7 +41,10 @@ class App extends Component {
   fetchGames = () => {
     fetch(`${url}/boardgames`)
       .then(res => res.json())
-      .then(json => this.setState({ games: json }));
+      .then(json => {
+        this.setState({ games: json });
+        console.log(json);
+      });
   };
 
   getGames = () => {
@@ -147,12 +152,46 @@ class App extends Component {
   };
 
   handleUserRedirect = json => {
-    if (json.error) {
+    if (!json.error) {
     } else {
       this.props.history.push(`/login`);
     }
   };
+
+  userCollection = userId => {
+    fetch(`${url}/users/${userId}`)
+      .then(res => res.json())
+      .then(json => this.handleCollection(json));
+  };
+
+  handleCollection = json => {
+    this.setState(
+      {
+        user_games: json
+      },
+      json => this.getUserCollection()
+    );
+  };
+
+  getUserCollection = () => {
+    return this.state.user_games;
+  };
   // END
+
+  getUserGames = () => {
+    let games = [];
+    console.log(this.state);
+    if (this.state.authorization.isLoggedIn) {
+      this.state.authorization.user.user_games.map(user_game => {
+        let gameInfo = this.state.games.filter(
+          currentGame => currentGame.game.id === user_game.game.id
+        );
+        games.push(gameInfo[0]);
+      });
+    }
+    console.log(games);
+    return games;
+  };
 
   render() {
     return (
@@ -168,12 +207,23 @@ class App extends Component {
         <Route
           exact
           path="/"
-          render={() => <GamesList games={this.getGames()} />}
+          render={() => (
+            <GamesList
+              games={this.getGames()}
+              user={this.state.authorization.user}
+            />
+          )}
         />
         <Route
           path="/createGame"
-          render={() => <CreateGame onCreateGame={this.onCreateGame} />}
+          render={() => (
+            <CreateGame
+              user={this.state.authorization.user}
+              onCreateGame={this.onCreateGame}
+            />
+          )}
         />
+
         <Route
           path="/boardgame/:slug"
           render={props => {
@@ -189,9 +239,34 @@ class App extends Component {
           render={() => <CreateUser onCreateUser={this.onCreateUser} />}
         />
         <Route path="/loading" render={() => <Loading />} />
+        <Route
+          path="/mygames"
+          render={() => (
+            <GamesList
+              games={this.getUserGames()}
+              user={this.state.authorization.user}
+            />
+          )}
+        />
+        <Route
+          path="/myprofile"
+          render={() => <UserProfile user={this.state.authorization.user} />}
+        />
       </div>
     );
   }
 }
 
 export default withRouter(App);
+
+// DEAD CODE USE IF NECESSARY
+// <Route
+//   path="/mygames"
+//   render={() => (
+//     <UserCollection
+//       user={this.state.authorization.user}
+//       userCollection={() => this.userCollection.bind(this)}
+//       games={this.getUserCollection()}
+//     />
+//   )}
+// />

@@ -27,7 +27,7 @@ class CreateGame extends React.Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    this.props.onCreateUser(this.state);
+    this.props.onCreateGame(this.state);
   };
 
   render() {
