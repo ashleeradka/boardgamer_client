@@ -5,6 +5,7 @@ import GamesList from "./GamesList";
 import CreateGame from "./Creategame";
 import GameShowPage from "./GameShowPage.js";
 import Login from "./Login.js";
+import Loading from "./Loading.js";
 // import { authorizer } from "./Apilogin.js";
 import { Route, Switch, Redirect, withRouter } from "react-router-dom";
 import CreateUser from "./CreateUser";
@@ -23,7 +24,8 @@ class App extends Component {
       authorization: {
         loggedIn: false,
         user: {}
-      }
+      },
+      error: ""
     };
   }
 
@@ -89,14 +91,15 @@ class App extends Component {
       .then(user => {
         if (!user.error) {
           this.setState({
-            authorization: { isLoggedIn: true, user: user }
+            authorization: { isLoggedIn: true, user: user },
+            error: ""
           });
           localStorage.setItem("jwt", user.jwt);
           console.log(this.state);
           this.findCurrentUser();
           this.props.history.push(`/`);
         } else {
-          alert("User name / password combination not found!");
+          this.setState({ error: user.error });
         }
       });
   };
@@ -159,6 +162,9 @@ class App extends Component {
           userInfo={this.state.authorization}
           handleLogout={this.handleLogout.bind(this)}
         />
+        {!!this.state.error ? (
+          <div className="ui error message"> {this.state.error} </div>
+        ) : null}
         <Route
           exact
           path="/"
@@ -182,6 +188,7 @@ class App extends Component {
           path="/user/new"
           render={() => <CreateUser onCreateUser={this.onCreateUser} />}
         />
+        <Route path="/loading" render={() => <Loading />} />
       </div>
     );
   }
