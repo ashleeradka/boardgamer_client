@@ -7,9 +7,12 @@ import GameShowPage from "./GameShowPage.js";
 import Login from "./Login.js";
 // import { authorizer } from "./Apilogin.js";
 import { Route, Switch, Redirect, withRouter } from "react-router-dom";
+import CreateUser from "./CreateUser";
 
 const url = "http://localhost:3001/api/v1";
 const postUrl = "http://localhost:3001/api/v1/users/1/createboardgame";
+const createUserUrl = "http://localhost:3001/api/v1/users/create";
+
 class App extends Component {
   constructor() {
     super();
@@ -125,6 +128,28 @@ class App extends Component {
   }
 
   // END OF NEW CODE
+  // ASHLEE NEW CODE
+  onCreateUser = form => {
+    let body = { form };
+    fetch(createUserUrl, {
+      method: "POST",
+      headers: new Headers({
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      }),
+      body: JSON.stringify(body)
+    })
+      .then(resp => resp.json())
+      .then(json => this.handleUserRedirect(json));
+  };
+
+  handleUserRedirect = json => {
+    if (json.error) {
+    } else {
+      this.props.history.push(`/login`);
+    }
+  };
+  // END
 
   render() {
     return (
@@ -153,6 +178,10 @@ class App extends Component {
           }}
         />
         <Route path="/login" render={() => <Login onLogin={this.onLogin} />} />
+        <Route
+          path="/user/new"
+          render={() => <CreateUser onCreateUser={this.onCreateUser} />}
+        />
       </div>
     );
   }
