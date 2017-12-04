@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 // import { authorizer } from "./Apilogin.js";
+import { Route, Switch, Redirect, withRouter } from "react-router-dom";
 
 class Login extends Component {
   constructor() {
@@ -21,6 +22,10 @@ class Login extends Component {
   handleSubmit = e => {
     e.preventDefault();
     this.props.onLogin(this.state);
+  };
+
+  redirectToCreateUser = () => {
+    this.props.history.push(`/user/new`);
   };
 
   render() {
@@ -49,10 +54,13 @@ class Login extends Component {
           <button className="ui button" type="submit">
             Submit
           </button>
+          <a onClick={this.redirectToCreateUser.bind(this)}>
+            New user? Create an account.
+          </a>
         </form>
       </div>
     );
   }
 }
 
-export default Login;
+export default withRouter(Login);

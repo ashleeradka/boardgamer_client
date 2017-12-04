@@ -42,7 +42,9 @@ class GamesCard extends Component {
         <div className="ui card">
           {this.state.clicked ? (
             <div className="content fluid">
-              <div className="header">{this.props.game.game.name}</div>
+              <div className="header">
+                <a onClick={this.redirectToShow}>{this.props.game.game.name}</a>
+              </div>
               <i
                 className="right floated like icon"
                 onClick={this.handleLike.bind(this)}
