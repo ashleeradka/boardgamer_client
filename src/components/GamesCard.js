@@ -19,7 +19,26 @@ class GamesCard extends Component {
 
   handleAddToCollection = e => {
     console.log(this.props.game);
-    // if user post to add to user collection else link to create profile
+    console.log(this.props.user);
+    if (!!this.props.user.user_info) {
+      const userId = this.props.user.user_info.id;
+      const game = this.props.game.game;
+
+      let postUrl = `http://localhost:3001/api/v1/addtocollection`;
+
+      fetch(postUrl, {
+        method: "POST",
+        headers: new Headers({
+          Accept: "application/json",
+          "Content-Type": "application/json"
+        }),
+        body: JSON.stringify({ game: game, user_id: userId })
+      })
+        .then(resp => console.log(resp))
+        .then(() => this.props.history.push("./mygames"));
+    } else {
+      this.props.history.push(`/login`);
+    }
   };
 
   handleLike = e => {

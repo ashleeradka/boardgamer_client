@@ -39,7 +39,10 @@ class App extends Component {
   fetchGames = () => {
     fetch(`${url}/boardgames`)
       .then(res => res.json())
-      .then(json => this.setState({ games: json }));
+      .then(json => {
+        this.setState({ games: json });
+        console.log(json);
+      });
   };
 
   getGames = () => {
@@ -154,6 +157,21 @@ class App extends Component {
   };
   // END
 
+  getUserGames = () => {
+    let games = [];
+    console.log(this.state);
+    if (this.state.authorization.isLoggedIn) {
+      this.state.authorization.user.user_games.map(user_game => {
+        let gameInfo = this.state.games.filter(
+          currentGame => currentGame.game.id === user_game.game.id
+        );
+        games.push(gameInfo[0]);
+      });
+    }
+    console.log(games);
+    return games;
+  };
+
   render() {
     return (
       <div className="App">
@@ -168,7 +186,12 @@ class App extends Component {
         <Route
           exact
           path="/"
-          render={() => <GamesList games={this.getGames()} />}
+          render={() => (
+            <GamesList
+              games={this.getGames()}
+              user={this.state.authorization.user}
+            />
+          )}
         />
         <Route
           path="/createGame"
@@ -189,6 +212,15 @@ class App extends Component {
           render={() => <CreateUser onCreateUser={this.onCreateUser} />}
         />
         <Route path="/loading" render={() => <Loading />} />
+        <Route
+          path="/mygames"
+          render={() => (
+            <GamesList
+              games={this.getUserGames()}
+              user={this.state.authorization.user}
+            />
+          )}
+        />
       </div>
     );
   }

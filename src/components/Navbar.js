@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 
 const Navbar = props => {
   const userInfo = props.userInfo;
-  console.log(userInfo);
   return (
     <div className="ui secondary  menu">
       <Link to="/" className="item">
