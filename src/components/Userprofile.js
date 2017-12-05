@@ -54,8 +54,24 @@ class UserProfile extends React.Component {
                 onAddGame={this.props.onAddGame}
                 onRemoveGame={this.props.onRemoveGame}
                 game={game}
+                key={game.id}
               />
             ))}
+          </div>
+          <div className="ui compact segment">
+            <h4 className="ui center aligned header">Liked</h4>
+            {this.getGames("favorite").map(
+              game =>
+                !game.info.owned && !game.info.wishlist ? (
+                  <GamesCard
+                    user={this.props.user}
+                    onAddGame={this.props.onAddGame}
+                    onRemoveGame={this.props.onRemoveGame}
+                    game={game}
+                    key={game.id}
+                  />
+                ) : null
+            )}
           </div>
           <div className="ui compact segment">
             <h4 className="ui center aligned header">Wishlist</h4>
@@ -65,6 +81,7 @@ class UserProfile extends React.Component {
                 onAddGame={this.props.onAddGame}
                 onRemoveGame={this.props.onRemoveGame}
                 game={game}
+                key={game.id}
               />
             ))}
           </div>
