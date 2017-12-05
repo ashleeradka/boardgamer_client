@@ -6,7 +6,8 @@ class GamesCard extends Component {
     super();
 
     this.state = {
-      clicked: false
+      clicked: false,
+      added: false
     };
   }
 
@@ -19,6 +20,7 @@ class GamesCard extends Component {
 
   handleAddToCollection = e => {
     this.props.onAddGame(this.props.game);
+    this.setState({ added: true });
   };
 
   handleLike = e => {
@@ -79,15 +81,24 @@ class GamesCard extends Component {
               <img src={this.props.game.game.image_url} />
             </div>
           )}
-          <div className="extra content">
-            <div
-              onClick={this.handleAddToCollection}
-              className="ui bottom attached button"
-            >
-              <i className="add icon" />
-              Add to collection
+          {this.state.added ? (
+            <div className="extra content">
+              <div className="ui positive bottom attached button">
+                <i className="checkmark icon" />
+                Added to collection
+              </div>
             </div>
-          </div>
+          ) : (
+            <div className="extra content">
+              <div
+                onClick={this.handleAddToCollection}
+                className="ui bottom attached button"
+              >
+                <i className="add icon" />
+                Add to collection
+              </div>
+            </div>
+          )}
         </div>
       </div>
     );
