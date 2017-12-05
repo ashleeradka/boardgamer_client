@@ -10,6 +10,7 @@ import Loading from "./Loading.js";
 import { Route, Switch, Redirect, withRouter } from "react-router-dom";
 import CreateUser from "./CreateUser";
 import UserProfile from "./Userprofile";
+import OtherProfile from "./Otherprofile";
 
 const url = "http://localhost:3001/api/v1";
 const postUrl = "http://localhost:3001/api/v1/users/1/createboardgame";
@@ -157,24 +158,24 @@ class App extends Component {
     }
   };
 
-  userCollection = userId => {
-    fetch(`${url}/users/${userId}`)
-      .then(res => res.json())
-      .then(json => this.handleCollection(json));
-  };
-
-  handleCollection = json => {
-    this.setState(
-      {
-        user_games: json
-      },
-      json => this.getUserCollection()
-    );
-  };
-
-  getUserCollection = () => {
-    return this.state.user_games;
-  };
+  // userCollection = userId => {
+  //   fetch(`${url}/users/${userId}`)
+  //     .then(res => res.json())
+  //     .then(json => this.handleCollection(json));
+  // };
+  //
+  // handleCollection = json => {
+  //   this.setState(
+  //     {
+  //       user_games: json
+  //     },
+  //     json => this.getUserCollection()
+  //   );
+  // };
+  //
+  // getUserCollection = () => {
+  //   return this.state.user_games;
+  // };
   // END
 
   getUserGames = () => {
@@ -248,7 +249,12 @@ class App extends Component {
             />
           )}
         />
-
+        <Route
+          path="/user/:id"
+          render={props => {
+            return <OtherProfile user={props.match.params.id} />;
+          }}
+        />
         <Route
           path="/boardgame/:slug"
           render={props => {
