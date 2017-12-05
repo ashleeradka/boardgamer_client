@@ -62,7 +62,6 @@ class App extends Component {
   onCreateGame = form => {
     let userId = this.state.authorization.user.user_info.id;
     let body = { form };
-    debugger;
     fetch(`${url}/users/${userId}/createboardgame`, {
       method: "POST",
       headers: new Headers({
@@ -252,7 +251,13 @@ class App extends Component {
         <Route
           path="/user/:id"
           render={props => {
-            return <OtherProfile user={props.match.params.id} />;
+            return (
+              <OtherProfile
+                user={props.match.params.id}
+                currentUser={this.state.authorization.user}
+                onAddGame={this.handleAddToCollection.bind(this)}
+              />
+            );
           }}
         />
         <Route

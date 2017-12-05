@@ -1,6 +1,7 @@
 import React from "react";
 import GamesList from "./GamesList.js";
 import FriendButton from "./FriendButton.js";
+import GamesCard from "./GamesCard.js";
 
 class UserProfile extends React.Component {
   constructor() {
@@ -44,16 +45,25 @@ class UserProfile extends React.Component {
               ))}
             </div>
           </div>
-          <div className="ui segment">
+          <div className="ui compact segment">
             <h4 className="ui center aligned header">Owned</h4>
-            <GamesList games={this.getGames("owned")} user={this.props.user} />
+            {this.getGames("owned").map(game => (
+              <GamesCard
+                user={this.props.user}
+                onAddGame={this.props.onAddGame}
+                game={game}
+              />
+            ))}
           </div>
-          <div className="ui segment">
+          <div className="ui compact segment">
             <h4 className="ui center aligned header">Wishlist</h4>
-            <GamesList
-              games={this.getGames("wishlist")}
-              user={this.props.user}
-            />
+            {this.getGames("wishlist").map(game => (
+              <GamesCard
+                user={this.props.user}
+                onAddGame={this.props.onAddGame}
+                game={game}
+              />
+            ))}
           </div>
         </div>
       </div>
