@@ -21,18 +21,26 @@ class OtherProfile extends React.Component {
   }
 
   getGames(category) {
-    debugger;
     let games = this.state.user.boardgames.filter(
       game => game.info[category] === true
     );
+    let gameIds = games.map(game => game.game.id);
+    debugger;
     let newGamesFormat = [];
     this.state.user.boardgames.forEach(currentGame =>
       newGamesFormat.push({ game: currentGame.game })
     );
+    let currentUserGameIds = this.props.currentUser.user_games.filter(function(
+      user_game
+    ) {
+      user_game;
+    });
     debugger;
   }
 
   render() {
+    console.log(this.props);
+    console.log(this.state.user);
     if (this.state.user.user === undefined) {
       return <div>Loading</div>;
     }
@@ -52,15 +60,16 @@ class OtherProfile extends React.Component {
         <br />
         <div className="ui segment">
           <h4 className="ui center aligned header">Owned Games</h4>
-          <GamesList
-            games={this.getGames("owned")}
-            user={this.state.user.user}
-            onAddGame={this.props.onAddGame}
-          />
         </div>
       </div>
     );
   }
 }
+
+// <GamesList
+//   games={this.getGames("owned")}
+//   user={this.state.user.user}
+//   onAddGame={this.props.onAddGame}
+// />
 
 export default OtherProfile;
