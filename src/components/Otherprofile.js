@@ -12,7 +12,7 @@ class OtherProfile extends React.Component {
   }
 
   componentDidMount() {
-    fetch(`${url}/users/${this.props.user}`)
+    fetch(`${url}/users/${this.props.userId}`)
       .then(resp => resp.json())
       .then(json => {
         this.setState({ user: json });
@@ -20,18 +20,28 @@ class OtherProfile extends React.Component {
       });
   }
 
-  getGameIds() {
-    return this.state.user.boardgames.map(gameInfo => gameInfo.game.id);
+  sharedGames() {
+    let profileGameIds = this.state.user.boardgames.map(
+      gameInfo => gameInfo.game.id
+    );
+    if (this.props.user.user_games != undefined) {
+      return this.props.user.user_games.filter(game => {
+        return profileGameIds.includes(game.game.id);
+      });
+    }
+    return [];
   }
 
-  sharedGames() {
-    let profileGameIds = this.getGameIds();
-    let sharedGames = this.state.user.boardgames.filter(game => {
-      profileGameIds.includes(game.info.id);
-    });
-
-    debugger;
-    return sharedGames;
+  nonSharedGames() {
+    if (this.props.user.user_games != undefined) {
+      let profileGameIds = this.props.user.user_games.map(
+        gameInfo => gameInfo.game.id
+      );
+      return this.state.user.boardgames.filter(game => {
+        return !profileGameIds.includes(game.game.id);
+      });
+    }
+    return [];
   }
 
   render() {
@@ -55,8 +65,22 @@ class OtherProfile extends React.Component {
         />{" "}
         <br />
         <div className="ui segment">
-          <h4 className="ui center aligned header">Owned Games</h4>
-          <GamesList games={this.sharedGames} user={this.props.user} />
+          <h4 className="ui center aligned header">Shared Games</h4>
+          <GamesList
+            onAddGame={this.props.onAddGame}
+            onRemoveGame={this.props.onRemoveGame}
+            games={this.sharedGames()}
+            user={this.props.user}
+          />
+        </div>
+        <div className="ui segment">
+          <h4 className="ui center aligned header">Unique Games</h4>
+          <GamesList
+            onAddGame={this.props.onAddGame}
+            onRemoveGame={this.props.onRemoveGame}
+            games={this.nonSharedGames()}
+            user={this.props.user}
+          />
         </div>
       </div>
     );

@@ -271,9 +271,10 @@ class App extends Component {
           render={props => {
             return (
               <OtherProfile
-                user={props.match.params.id}
-                currentUser={this.state.authorization.user}
+                userId={props.match.params.id}
+                user={this.state.authorization.user}
                 onAddGame={this.handleAddToCollection.bind(this)}
+                onRemoveGame={this.handleRemoveFromCollection.bind(this)}
               />
             );
           }}
