@@ -4,7 +4,7 @@ import { Route, Switch, Redirect, withRouter } from "react-router-dom";
 class GamesCard extends Component {
   constructor(props) {
     super(props);
-    console.log(this.props.user);
+
     this.state = {
       clicked: false,
       added: false,
@@ -15,7 +15,11 @@ class GamesCard extends Component {
       borrowed: false,
       removeOption: "",
       removeMessage: "Add to Collection",
-      buttonIcon: "add"
+
+      buttonIcon: "add",
+      heartIcon: "",
+      bookmarkIcon: ""
+
     };
   }
 
@@ -54,13 +58,46 @@ class GamesCard extends Component {
   };
 
   handleLike = e => {
-    console.log(this.props.game.likes);
-    // post to game for likes and user likes if user exists
+    console.log(this.props.game.game.id);
+    console.log(e);
+    this.setState({
+      heartIcon: "red"
+    });
+    let body = {
+      attribute: "favorite",
+      user: this.props.user.user_info.id,
+      game: this.props.game.game.id
+    };
+    this.attributePost(body);
+    this.setState({
+      heartIcon: "red"
+    });
   };
 
   handleWish = e => {
-    console.log(this.props.game);
-    // if user exists post to add game to collection as wish
+    this.setState({
+      bookmarkIcon: "yellow"
+    });
+    let body = {
+      attribute: "wishlist",
+      user: this.props.user.user_info.id,
+      game: this.props.game.game.id
+    };
+    this.attributePost(body);
+    this.setState({
+      bookmarkIcon: "yellow"
+    });
+  };
+
+  attributePost = body => {
+    fetch("http://localhost:3001/api/v1/updateattribute", {
+      method: "POST",
+      headers: new Headers({
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      }),
+      body: JSON.stringify(body)
+    }).then(resp => this.handleBooleanStates());
   };
 
   redirectToShow = () => {
@@ -79,6 +116,20 @@ class GamesCard extends Component {
         buttonIcon: "minus"
       });
     }
+
+
+    if (this.state.favorite === true) {
+      this.setState({
+        heartIcon: "red"
+      });
+    }
+
+    if (this.state.wishlist === true) {
+      this.setState({
+        bookmarkIcon: "yellow"
+      });
+    }
+
   };
 
   render() {
@@ -91,11 +142,13 @@ class GamesCard extends Component {
                 <a onClick={this.redirectToShow}>{this.props.game.game.name}</a>
               </div>
               <i
-                className="right floated like icon"
+                className={`right floated like icon ${this.state.heartIcon}`}
                 onClick={this.handleLike.bind(this)}
               />
               <i
-                className="right floated star icon"
+                className={`right floated bookmark icon ${
+                  this.state.bookmarkIcon
+                }`}
                 onClick={this.handleWish.bind(this)}
               />
               <div className="left floated meta">
