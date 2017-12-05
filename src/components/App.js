@@ -211,6 +211,23 @@ class App extends Component {
     }
   }
 
+  handleRemoveFromCollection(e) {
+    if (this.state.authorization.isLoggedIn) {
+      const userId = this.state.authorization.user.user_info.id;
+      const game = e.game;
+      let postUrl = `http://localhost:3001/api/v1/removefromcollection`;
+
+      fetch(postUrl, {
+        method: "POST",
+        headers: new Headers({
+          Accept: "application/json",
+          "Content-Type": "application/json"
+        }),
+        body: JSON.stringify({ game: game, user_id: userId })
+      }).then(resp => this.checkResp(resp));
+    }
+  }
+
   checkResp(resp) {
     console.log(resp);
     this.fetchGames();
@@ -236,6 +253,7 @@ class App extends Component {
               games={this.getGames()}
               user={this.state.authorization.user}
               onAddGame={this.handleAddToCollection.bind(this)}
+              onRemoveGame={this.handleRemoveFromCollection.bind(this)}
             />
           )}
         />
@@ -281,6 +299,8 @@ class App extends Component {
             <GamesList
               games={this.getUserGames()}
               user={this.state.authorization.user}
+              onAddGame={this.handleAddToCollection.bind(this)}
+              onRemoveGame={this.handleRemoveFromCollection.bind(this)}
             />
           )}
         />
@@ -291,6 +311,7 @@ class App extends Component {
               user={this.state.authorization.user}
               games={this.getUserGames()}
               onAddGame={this.handleAddToCollection.bind(this)}
+              onRemoveGame={this.handleRemoveFromCollection.bind(this)}
             />
           )}
         />
