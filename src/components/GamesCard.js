@@ -19,7 +19,6 @@ class GamesCard extends Component {
       buttonIcon: "add",
       heartIcon: "",
       bookmarkIcon: ""
-
     };
   }
 
@@ -53,8 +52,17 @@ class GamesCard extends Component {
   };
 
   handleAddToCollection = e => {
-    this.props.onAddGame(this.props.game);
-    this.setState({ added: true });
+    if (this.state.removeOption === "negative") {
+      this.removeFromCollection();
+    } else {
+      this.props.onAddGame(this.props.game);
+      this.setState({ added: true });
+    }
+  };
+
+  removeFromCollection = () => {
+    this.props.onRemoveGame(this.props.game);
+    this.setState({ added: false });
   };
 
   handleLike = e => {
@@ -117,7 +125,6 @@ class GamesCard extends Component {
       });
     }
 
-
     if (this.state.favorite === true) {
       this.setState({
         heartIcon: "red"
@@ -129,7 +136,6 @@ class GamesCard extends Component {
         bookmarkIcon: "yellow"
       });
     }
-
   };
 
   render() {
