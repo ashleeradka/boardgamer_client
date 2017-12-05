@@ -4,6 +4,7 @@ import { Route, Switch, Redirect, withRouter } from "react-router-dom";
 class GamesCard extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
       clicked: false,
       added: false,
@@ -14,9 +15,11 @@ class GamesCard extends Component {
       borrowed: false,
       removeOption: "",
       removeMessage: "Add to Collection",
+
       buttonIcon: "add",
       heartIcon: "",
       bookmarkIcon: ""
+
     };
   }
 
@@ -114,6 +117,7 @@ class GamesCard extends Component {
       });
     }
 
+
     if (this.state.favorite === true) {
       this.setState({
         heartIcon: "red"
@@ -125,6 +129,7 @@ class GamesCard extends Component {
         bookmarkIcon: "yellow"
       });
     }
+
   };
 
   render() {
