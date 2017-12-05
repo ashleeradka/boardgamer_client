@@ -15,10 +15,11 @@ class GamesCard extends Component {
       borrowed: false,
       removeOption: "",
       removeMessage: "Add to Collection",
-
       buttonIcon: "add",
       heartIcon: "",
-      bookmarkIcon: ""
+      bookmarkIcon: "",
+      wishRibbon: "",
+      likeRibbon: ""
     };
   }
 
@@ -62,39 +63,49 @@ class GamesCard extends Component {
 
   removeFromCollection = () => {
     this.props.onRemoveGame(this.props.game);
-    this.setState({ added: false });
+    this.setState({
+      added: false,
+      removeOption: "",
+      removeMessage: "Add to Collection",
+      buttonIcon: "add"
+    });
   };
 
   handleLike = e => {
-    console.log(this.props.game.game.id);
-    console.log(e);
-    this.setState({
-      heartIcon: "red"
-    });
+    if (this.state.heartIcon === "red") {
+      this.setState({
+        heartIcon: ""
+      });
+    } else {
+      this.setState({
+        heartIcon: "red"
+      });
+    }
+
     let body = {
       attribute: "favorite",
       user: this.props.user.user_info.id,
       game: this.props.game.game.id
     };
     this.attributePost(body);
-    this.setState({
-      heartIcon: "red"
-    });
   };
 
   handleWish = e => {
-    this.setState({
-      bookmarkIcon: "yellow"
-    });
+    if (this.state.bookmarkIcon === "yellow") {
+      this.setState({
+        bookmarkIcon: ""
+      });
+    } else {
+      this.setState({
+        bookmarkIcon: "yellow"
+      });
+    }
     let body = {
       attribute: "wishlist",
       user: this.props.user.user_info.id,
       game: this.props.game.game.id
     };
     this.attributePost(body);
-    this.setState({
-      bookmarkIcon: "yellow"
-    });
   };
 
   attributePost = body => {
@@ -127,13 +138,15 @@ class GamesCard extends Component {
 
     if (this.state.favorite === true) {
       this.setState({
-        heartIcon: "red"
+        heartIcon: "red",
+        likeRibbon: "ui red top left attached label"
       });
     }
 
     if (this.state.wishlist === true) {
       this.setState({
-        bookmarkIcon: "yellow"
+        bookmarkIcon: "yellow",
+        wishRibbon: "ui yellow bottom left attached label"
       });
     }
   };
@@ -178,7 +191,7 @@ class GamesCard extends Component {
             </div>
           ) : (
             <div
-              className="centered content fluid image"
+              className="ui centered content fluid image"
               onClick={this.handleClick.bind(this)}
             >
               <img src={this.props.game.game.image_url} />
@@ -193,6 +206,11 @@ class GamesCard extends Component {
             </div>
           ) : (
             <div className="extra content">
+              {this.state.likeRibbon === "ui red top left attached label" ? (
+                <div className={this.state.likeRibbon}>
+                  <span>Favorite</span>
+                </div>
+              ) : null}
               <div
                 onClick={this.handleAddToCollection}
                 className={`ui bottom attached button ${
@@ -202,6 +220,12 @@ class GamesCard extends Component {
                 <i className={`${this.state.buttonIcon} icon`} />
                 {this.state.removeMessage}
               </div>
+              {this.state.wishRibbon ===
+              "ui yellow bottom left attached label" ? (
+                <div className={this.state.wishRibbon}>
+                  <span>Wishlist</span>
+                </div>
+              ) : null}
             </div>
           )}
         </div>
