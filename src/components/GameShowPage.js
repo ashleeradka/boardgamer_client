@@ -1,9 +1,6 @@
 import React from "react";
 
 class GameShowPage extends React.Component {
-  constructor() {
-    super();
-  }
   render() {
     if (!this.props.game) {
       return <div>loading...</div>;

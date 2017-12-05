@@ -141,7 +141,7 @@ class GamesCard extends Component {
   render() {
     return (
       <div id="card">
-        <div className="ui card">
+        <div className="ui centered card">
           {this.state.clicked ? (
             <div className="content fluid">
               <div className="header">
@@ -195,9 +195,8 @@ class GamesCard extends Component {
             <div className="extra content">
               <div
                 onClick={this.handleAddToCollection}
-                className={`ui bottom attached button ${
-                  this.state.removeOption
-                }`}
+                className={`ui bottom attached button ${this.state
+                  .removeOption}`}
               >
                 <i className={`${this.state.buttonIcon} icon`} />
                 {this.state.removeMessage}

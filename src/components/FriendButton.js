@@ -7,12 +7,10 @@ class FriendButton extends React.Component {
   }
 
   handleRedirect() {
-    debugger;
     this.props.history.push(`/user/${this.props.friend.id}`);
   }
 
   render() {
-    console.log(this.props.friend);
     return (
       <div onClick={this.handleRedirect.bind(this)}>
         <div className="item">
