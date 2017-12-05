@@ -61,6 +61,7 @@ class App extends Component {
   onCreateGame = form => {
     let userId = this.state.authorization.user.user_info.id;
     let body = { form };
+    debugger;
     fetch(`${url}/users/${userId}/createboardgame`, {
       method: "POST",
       headers: new Headers({
@@ -181,7 +182,9 @@ class App extends Component {
     if (this.state.authorization.isLoggedIn) {
       this.state.authorization.user.user_games.map(user_game => {
         let gameInfo = this.state.games.filter(
-          currentGame => currentGame.game.id === user_game.game.id
+          currentGame =>
+            currentGame.game.id === user_game.game.id &&
+            (user_game.info.owned || user_game.info)
         );
         games.push(gameInfo[0]);
       });
@@ -272,7 +275,13 @@ class App extends Component {
         />
         <Route
           path="/myprofile"
-          render={() => <UserProfile user={this.state.authorization.user} />}
+          render={() => (
+            <UserProfile
+              user={this.state.authorization.user}
+              games={this.getUserGames()}
+              onAddGame={this.handleAddToCollection.bind(this)}
+            />
+          )}
         />
       </div>
     );
