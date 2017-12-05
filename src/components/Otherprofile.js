@@ -20,13 +20,18 @@ class OtherProfile extends React.Component {
       });
   }
 
-  getGames(category) {
-    let userGames = this.state.user.boardgames.filter(
-      game => game.info[category] === true
-    );
-    let userGameIds = userGames.map(game => game.game.id);
+  getGameIds() {
+    return this.state.user.boardgames.map(gameInfo => gameInfo.game.id);
+  }
+
+  sharedGames() {
+    let profileGameIds = this.getGameIds();
+    let sharedGames = this.state.user.boardgames.filter(game => {
+      profileGameIds.includes(game.info.id);
+    });
+
     debugger;
-    debugger;
+    return sharedGames;
   }
 
   render() {
@@ -51,7 +56,7 @@ class OtherProfile extends React.Component {
         <br />
         <div className="ui segment">
           <h4 className="ui center aligned header">Owned Games</h4>
-          {this.getGames("owned")}
+          <GamesList games={this.sharedGames} user={this.props.user} />
         </div>
       </div>
     );
