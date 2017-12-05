@@ -52,6 +52,7 @@ class UserProfile extends React.Component {
               <GamesCard
                 user={this.props.user}
                 onAddGame={this.props.onAddGame}
+                onRemoveGame={this.props.onRemoveGame}
                 game={game}
               />
             ))}
@@ -62,6 +63,7 @@ class UserProfile extends React.Component {
               <GamesCard
                 user={this.props.user}
                 onAddGame={this.props.onAddGame}
+                onRemoveGame={this.props.onRemoveGame}
                 game={game}
               />
             ))}
