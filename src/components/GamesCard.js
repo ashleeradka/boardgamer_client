@@ -194,8 +194,9 @@ class GamesCard extends Component {
             <div className="extra content">
               <div
                 onClick={this.handleAddToCollection}
-                className={`ui bottom attached button ${this.state
-                  .removeOption}`}
+                className={`ui bottom attached button ${
+                  this.state.removeOption
+                }`}
               >
                 <i className={`${this.state.buttonIcon} icon`} />
                 {this.state.removeMessage}
