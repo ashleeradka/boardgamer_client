@@ -2,14 +2,44 @@ import React, { Component } from "react";
 import { Route, Switch, Redirect, withRouter } from "react-router-dom";
 
 class GamesCard extends Component {
-  constructor() {
-    super();
-
+  constructor(props) {
+    super(props);
+    console.log(this.props.user);
     this.state = {
       clicked: false,
-      added: false
+      added: false,
+      owned: false,
+      favorite: false,
+      wishlist: false,
+      lent: false,
+      borrowed: false,
+      removeOption: "",
+      removeMessage: "Add to Collection",
+      buttonIcon: "add"
     };
   }
+
+  handleBooleanStates = () => {
+    let game = this.props.game.game.id;
+    let userGames = this.props.user.user_games;
+
+    if (!!userGames) {
+      userGames.map(userGame => {
+        if (userGame.game.id === game) {
+          this.setState(
+            {
+              owned: userGame.info.owned,
+              favorite: userGame.info.favorite,
+              wishlist: userGame.info.wishlist,
+              lent: userGame.info.lent,
+              borrowed: userGame.info.borrowed
+            },
+            this.updateButton
+          );
+        }
+      });
+    }
+  };
 
   handleClick = e => {
     const newState = !this.state.clicked;
@@ -35,6 +65,20 @@ class GamesCard extends Component {
 
   redirectToShow = () => {
     this.props.history.push(`/boardgame/${this.props.game.game.slug}`);
+  };
+
+  componentDidMount = () => {
+    this.handleBooleanStates();
+  };
+
+  updateButton = () => {
+    if (this.state.owned === true) {
+      this.setState({
+        removeOption: "negative",
+        removeMessage: "Remove",
+        buttonIcon: "minus"
+      });
+    }
   };
 
   render() {
@@ -92,10 +136,12 @@ class GamesCard extends Component {
             <div className="extra content">
               <div
                 onClick={this.handleAddToCollection}
-                className="ui bottom attached button"
+                className={`ui bottom attached button ${
+                  this.state.removeOption
+                }`}
               >
-                <i className="add icon" />
-                Add to collection
+                <i className={`${this.state.buttonIcon} icon`} />
+                {this.state.removeMessage}
               </div>
             </div>
           )}
