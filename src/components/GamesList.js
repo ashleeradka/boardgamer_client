@@ -8,6 +8,7 @@ const GamesList = props => {
         game={game}
         user={props.user}
         onAddGame={props.onAddGame}
+        onRemoveGame={props.onRemoveGame}
         key={game.game.id}
       />
     );
