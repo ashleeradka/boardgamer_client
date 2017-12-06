@@ -1,5 +1,6 @@
 {
   "name": "boardgamer_client",
+  "homepage": "https://smashlove.github.io/boardgamer_client/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
