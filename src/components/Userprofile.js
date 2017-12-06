@@ -51,7 +51,7 @@ class UserProfile extends React.Component {
   }
 
   sendToPost(user, newPic) {
-    this.props.onUpdateUser(user, newPic);
+    this.props.onUpdateUser(user.id, newPic);
   }
 
   handleChange = e => {
