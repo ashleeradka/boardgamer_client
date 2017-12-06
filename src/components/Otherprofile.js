@@ -81,9 +81,13 @@ class OtherProfile extends React.Component {
         </div>{" "}
         <br />
         <img
-          className="ui centered medium image"
-          src={this.state.user.user.profile_image_url}
-        />{" "}
+          className="ui centered segment medium image"
+          src={
+            this.state.user.user.profile_image_url
+              ? this.state.user.user.profile_image_url
+              : "https://www.menon.no/wp-content/uploads/person-placeholder.jpg"
+          }
+        />
         <div>
           {this.state.isFriend ? (
             <div>
