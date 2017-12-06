@@ -12,6 +12,7 @@ import CreateUser from "./CreateUser";
 import UserProfile from "./Userprofile";
 import OtherProfile from "./Otherprofile";
 import UsersList from "./UsersList.js";
+import withAuth from "./WithAuth.js";
 
 const url = "https://api-boardgamer.herokuapp.com/api/v1";
 const postUrl =
@@ -30,7 +31,7 @@ class App extends Component {
       games: [],
       searchTerm: "",
       authorization: {
-        loggedIn: false,
+        isloggedIn: false,
         user: {}
       },
       error: ""
@@ -327,6 +328,7 @@ class App extends Component {
                 onAddFriend={this.addFriend.bind(this)}
                 attributePost={this.attributePost.bind(this)}
                 searchTerm={this.state.searchTerm}
+                loggedIn={this.state.authorization.isLoggedIn}
               />
             );
           }}
@@ -366,6 +368,7 @@ class App extends Component {
               onRemoveGame={this.handleRemoveFromCollection.bind(this)}
               attributePost={this.attributePost.bind(this)}
               searchTerm={this.state.search}
+              loggedIn={this.state.authorization.isLoggedIn}
             />
           )}
         />

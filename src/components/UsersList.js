@@ -1,5 +1,6 @@
 import React from "react";
 import FriendButton from "./FriendButton.js";
+import withAuth from "./WithAuth.js";
 
 class UsersList extends React.Component {
   constructor() {
@@ -38,4 +39,4 @@ class UsersList extends React.Component {
   }
 }
 
-export default UsersList;
+export default withAuth(UsersList);

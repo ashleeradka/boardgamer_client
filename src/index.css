@@ -1,6 +1,7 @@
 body {
   margin: 0;
   padding: 0;
+  background-color: rgba(45, 101, 255, 0.01);
   font-family: sans-serif;
 }
 
@@ -47,7 +48,6 @@ nav {
 }
 
 #profileGreyed {
-  background-color: rgba(45, 101, 255, 0.01);
 }
 
 .dull {

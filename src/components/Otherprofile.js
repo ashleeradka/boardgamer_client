@@ -1,5 +1,6 @@
 import React from "react";
 import GamesList from "./GamesList.js";
+import withAuth from "./WithAuth.js";
 
 const url = "https://api-boardgamer.herokuapp.com/api/v1";
 
@@ -43,13 +44,9 @@ class OtherProfile extends React.Component {
       gameInfo => gameInfo.game.id
     );
     if (this.props.user.user_games !== undefined) {
-      return this.props.user.user_games
-        .filter(game => {
-          return profileGameIds.includes(game.game.id);
-        })
-        .filter(game =>
-          game.game.name.toLowerCase().includes(this.props.searchTerm)
-        );
+      return this.props.user.user_games.filter(game => {
+        return profileGameIds.includes(game.game.id);
+      });
     }
     return [];
   }
@@ -59,13 +56,9 @@ class OtherProfile extends React.Component {
       let profileGameIds = this.props.user.user_games.map(
         gameInfo => gameInfo.game.id
       );
-      return this.state.user.boardgames
-        .filter(game => {
-          return !profileGameIds.includes(game.game.id);
-        })
-        .filter(game =>
-          game.game.name.toLowerCase().includes(this.props.searchTerm)
-        );
+      return this.state.user.boardgames.filter(game => {
+        return !profileGameIds.includes(game.game.id);
+      });
     }
     return [];
   }
@@ -152,4 +145,4 @@ class OtherProfile extends React.Component {
 //   onAddGame={this.props.onAddGame}
 // />
 
-export default OtherProfile;
+export default withAuth(OtherProfile);
