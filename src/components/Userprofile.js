@@ -19,7 +19,6 @@ class UserProfile extends React.Component {
   }
 
   render() {
-    console.log(this.props);
     if (!this.props.user.user_info) {
       return <div>loading...</div>;
     }
@@ -54,7 +53,8 @@ class UserProfile extends React.Component {
                 onAddGame={this.props.onAddGame}
                 onRemoveGame={this.props.onRemoveGame}
                 game={game}
-                key={game.id}
+                key={game.game.id}
+                attributePost={this.props.attributePost}
               />
             ))}
           </div>
@@ -68,7 +68,8 @@ class UserProfile extends React.Component {
                     onAddGame={this.props.onAddGame}
                     onRemoveGame={this.props.onRemoveGame}
                     game={game}
-                    key={game.id}
+                    key={game.game.id}
+                    attributePost={this.props.attributePost}
                   />
                 ) : null
             )}
