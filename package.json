@@ -1,6 +1,6 @@
 {
-  "name": "boardgamer_app",
-  "homepage": "https://boardgamer-app.herokuapp.com/",
+  "name": "boardgamer_client",
+  "homepage": "https://smashlove.github.io/boardgamer_client/",
   "version": "0.1.0",
   "private": true,
   "engines": {
