@@ -189,7 +189,6 @@ class GamesCard extends Component {
   };
 
   render() {
-    console.log(this.props.game.game.image_url);
     return (
       <div id="card">
         <div className="ui centered card">
