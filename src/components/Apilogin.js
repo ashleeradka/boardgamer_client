@@ -1,7 +1,7 @@
-const API_ROOT = `http://localhost:3001/api/v1`;
+const API_ROOT = `https://api-boardgamer.herokuapp.com/api/v1`;
 const token = localStorage.getItem("token");
 
-const baseUrl = "http://localhost:3000/api/v1";
+const baseUrl = "https://api-boardgamer.herokuapp.com/api/v1";
 
 function currentUser() {
   return fetch(`${baseUrl}/current_user`, {

@@ -13,10 +13,12 @@ import UserProfile from "./Userprofile";
 import OtherProfile from "./Otherprofile";
 import UsersList from "./UsersList.js";
 
-const url = "http://localhost:3001/api/v1";
-const postUrl = "http://localhost:3001/api/v1/users/1/createboardgame";
-const createUserUrl = "http://localhost:3001/api/v1/users/create";
-const getUserUrl = "http://localhost:3001/api/v1/users/:id";
+const url = "https://api-boardgamer.herokuapp.com/api/v1";
+const postUrl =
+  "https://api-boardgamer.herokuapp.com/api/v1/users/1/createboardgame";
+const createUserUrl =
+  "https://api-boardgamer.herokuapp.com/api/v1/users/create";
+const getUserUrl = "https://api-boardgamer.herokuapp.com/api/v1/users/:id";
 
 class App extends Component {
   constructor() {
@@ -182,7 +184,7 @@ class App extends Component {
     if (this.state.authorization.isLoggedIn) {
       const userId = this.state.authorization.user.user_info.id;
       const game = e.game;
-      let postUrl = `http://localhost:3001/api/v1/addtocollection`;
+      let postUrl = `https://api-boardgamer.herokuapp.com/api/v1/addtocollection`;
 
       fetch(postUrl, {
         method: "POST",
@@ -201,7 +203,7 @@ class App extends Component {
     if (this.state.authorization.isLoggedIn) {
       const userId = this.state.authorization.user.user_info.id;
       const game = e.game;
-      let postUrl = `http://localhost:3001/api/v1/removefromcollection`;
+      let postUrl = `https://api-boardgamer.herokuapp.com/api/v1/removefromcollection`;
 
       fetch(postUrl, {
         method: "POST",
@@ -215,7 +217,7 @@ class App extends Component {
   }
 
   attributePost(body) {
-    fetch("http://localhost:3001/api/v1/updateattribute", {
+    fetch("https://api-boardgamer.herokuapp.com/api/v1/updateattribute", {
       method: "POST",
       headers: new Headers({
         Accept: "application/json",
@@ -233,7 +235,7 @@ class App extends Component {
   }
 
   addFriend = (user, friendBool) => {
-    fetch("http://localhost:3001/api/v1/addOrRemoveFriend", {
+    fetch("https://api-boardgamer.herokuapp.com/api/v1/addOrRemoveFriend", {
       method: "POST",
       headers: new Headers({
         Accept: "application/json",
@@ -281,6 +283,12 @@ class App extends Component {
           )}
         />
         <Route
+          exact
+          path="/new"
+          render={() => <CreateUser onCreateUser={this.onCreateUser} />}
+        />
+        <Route
+          exact
           path="/user/:id"
           render={props => {
             return (
@@ -305,10 +313,7 @@ class App extends Component {
           }}
         />
         <Route path="/login" render={() => <Login onLogin={this.onLogin} />} />
-        <Route
-          path="/user/new"
-          render={() => <CreateUser onCreateUser={this.onCreateUser} />}
-        />
+
         <Route path="/loading" render={() => <Loading />} />
         <Route
           path="/mygames"
