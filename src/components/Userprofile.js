@@ -54,6 +54,7 @@ class UserProfile extends React.Component {
         <div className="ui segment" id="profileGreyed">
           <div className="profileGreyed">
             <h4 className="ui center aligned header">Owned</h4>
+
             <GamesList
               onAddGame={this.props.onAddGame}
               onRemoveGame={this.props.onRemoveGame}
@@ -61,6 +62,7 @@ class UserProfile extends React.Component {
               user={this.props.user}
               attributePost={this.props.attributePost}
             />
+
           </div>
         </div>
         <div className="ui segment" id="profileGrey">
