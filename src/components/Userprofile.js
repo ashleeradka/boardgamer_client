@@ -25,16 +25,22 @@ class UserProfile extends React.Component {
     return (
       <div>
         <div>
-          <h1 className="ui center aligned header">
-            {this.props.user.user_info.first_name}{" "}
+          <h1 className="ui center aligned header ">
+            {this.props.user.user_info.first_name}
             {this.props.user.user_info.last_name}
           </h1>
-        </div>{" "}
+        </div>
         <br />
+
         <img
-          className="ui centered medium image"
-          src={this.props.user.user_info.profile_image_url}
-        />{" "}
+          className="ui centered segment medium image"
+          src={
+            this.props.user.user_info.profile_image_url
+              ? this.props.user.user_info.profile_image_url
+              : "https://www.menon.no/wp-content/uploads/person-placeholder.jpg"
+          }
+        />
+
         <br />
         <div className="ui horizontal segments">
           <div className="ui segment">
