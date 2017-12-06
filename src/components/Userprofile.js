@@ -6,12 +6,13 @@ import GamesCard from "./GamesCard.js";
 class UserProfile extends React.Component {
   constructor() {
     super();
+
     this.state = {
       owned: [],
       wishlist: [],
       imgClass: "ui centered segment medium image",
       imgAdd: false,
-      picUrl: ""
+      picUrl: this.props ? this.props.user.user_info.profile_image_url : ""
     };
   }
 
@@ -52,6 +53,7 @@ class UserProfile extends React.Component {
 
   sendToPost(user, newPic) {
     this.props.onUpdateUser(user.id, newPic);
+    this.addInput();
   }
 
   handleChange = e => {
@@ -62,6 +64,7 @@ class UserProfile extends React.Component {
     if (!this.props.user.user_info) {
       return <div>loading...</div>;
     }
+    console.log(this.props.user.user_info.profile_image_url);
     return (
       <div>
         <div>
@@ -98,7 +101,7 @@ class UserProfile extends React.Component {
               className={this.state.imgClass}
               src={
                 this.props.user.user_info.profile_image_url
-                  ? this.props.user.user_info.profile_image_url
+                  ? this.state.picUrl
                   : "https://www.menon.no/wp-content/uploads/person-placeholder.jpg"
               }
             />
