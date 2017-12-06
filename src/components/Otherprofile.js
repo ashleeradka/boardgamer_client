@@ -1,5 +1,6 @@
 import React from "react";
 import GamesList from "./GamesList.js";
+import withAuth from "./WithAuth.js";
 
 const url = "https://api-boardgamer.herokuapp.com/api/v1";
 
@@ -144,4 +145,4 @@ class OtherProfile extends React.Component {
 //   onAddGame={this.props.onAddGame}
 // />
 
-export default OtherProfile;
+export default withAuth(OtherProfile);

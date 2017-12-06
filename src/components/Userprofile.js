@@ -3,6 +3,7 @@ import GamesList from "./GamesList.js";
 import FriendButton from "./FriendButton.js";
 import GamesCard from "./GamesCard.js";
 import { withRouter } from "react-router-dom";
+import withAuth from "./WithAuth.js";
 
 class UserProfile extends React.Component {
   constructor() {
@@ -167,4 +168,4 @@ class UserProfile extends React.Component {
   }
 }
 
-export default withRouter(UserProfile);
+export default withAuth(UserProfile);
