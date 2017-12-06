@@ -87,6 +87,7 @@ class UserProfile extends React.Component {
                 onRemoveGame={this.props.onRemoveGame}
                 game={game}
                 key={game.id}
+                attributePost={this.attributePost.bind(this)}
               />
             ))}
           </div>
