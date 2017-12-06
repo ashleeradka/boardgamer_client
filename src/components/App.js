@@ -168,7 +168,7 @@ class App extends Component {
   };
 
   onUpdateUser = (user, newPic) => {
-    let body = { user: user, newPic: newPic };
+    let body = { id: user, profile_image_url: newPic };
     fetch(updateUserUrl, {
       method: "POST",
       headers: new Headers({
@@ -176,15 +176,17 @@ class App extends Component {
         "Content-Type": "application/json"
       }),
       body: JSON.stringify(body)
-    })
-      .then(resp => resp.json())
-      .then(json => this.handleUserRedirect(json));
+    }).then(json => this.handlePicRedirect(json));
   };
 
   handleUserRedirect = json => {
     if (!json.error) {
       this.props.history.push(`/login`);
     }
+  };
+
+  handlePicRedirect = json => {
+    this.props.history.push(`/myprofile`);
   };
 
   getUserGames = () => {
