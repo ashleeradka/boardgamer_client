@@ -19,6 +19,8 @@ const postUrl =
 const createUserUrl =
   "https://api-boardgamer.herokuapp.com/api/v1/users/create";
 const getUserUrl = "https://api-boardgamer.herokuapp.com/api/v1/users/:id";
+const updateUserUrl =
+  "https://api-boardgamer.herokuapp.com/api/v1/users/update";
 
 class App extends Component {
   constructor() {
@@ -153,6 +155,20 @@ class App extends Component {
   onCreateUser = form => {
     let body = { form: form };
     fetch(createUserUrl, {
+      method: "POST",
+      headers: new Headers({
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      }),
+      body: JSON.stringify(body)
+    })
+      .then(resp => resp.json())
+      .then(json => this.handleUserRedirect(json));
+  };
+
+  onUpdateUser = (user, newPic) => {
+    let body = { user: user, newPic: newPic };
+    fetch(updateUserUrl, {
       method: "POST",
       headers: new Headers({
         Accept: "application/json",
@@ -341,6 +357,7 @@ class App extends Component {
           path="/myprofile"
           render={() => (
             <UserProfile
+              onUpdateUser={this.onUpdateUser}
               user={this.state.authorization.user}
               games={this.getUserGames()}
               onAddGame={this.handleAddToCollection.bind(this)}
