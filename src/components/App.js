@@ -233,7 +233,6 @@ class App extends Component {
   }
 
   addFriend = (user, friendBool) => {
-    console.log(friendBool);
     fetch("http://localhost:3001/api/v1/addOrRemoveFriend", {
       method: "POST",
       headers: new Headers({
@@ -290,11 +289,8 @@ class App extends Component {
                 user={this.state.authorization.user}
                 onAddGame={this.handleAddToCollection.bind(this)}
                 onRemoveGame={this.handleRemoveFromCollection.bind(this)}
-
                 onAddFriend={this.addFriend.bind(this)}
-
                 attributePost={this.attributePost.bind(this)}
-
               />
             );
           }}
