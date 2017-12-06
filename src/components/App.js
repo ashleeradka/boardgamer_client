@@ -175,9 +175,7 @@ class App extends Component {
         "Content-Type": "application/json"
       }),
       body: JSON.stringify(body)
-    })
-      .then(resp => resp.json())
-      .then(json => this.handlePicRedirect(json));
+    }).then(json => this.handlePicRedirect(json));
   };
 
   handleUserRedirect = json => {
@@ -187,9 +185,7 @@ class App extends Component {
   };
 
   handlePicRedirect = json => {
-    if (!json.error) {
-      this.props.history.push(`/myprofile`);
-    }
+    this.props.history.push(`/myprofile`);
   };
 
   getUserGames = () => {
