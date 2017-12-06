@@ -68,7 +68,6 @@ class OtherProfile extends React.Component {
   }
 
   render() {
-    console.log(this.state);
     if (this.state.user.user === undefined) {
       return <div>Loading</div>;
     }

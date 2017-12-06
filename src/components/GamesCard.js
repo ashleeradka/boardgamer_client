@@ -5,6 +5,23 @@ class GamesCard extends Component {
   constructor(props) {
     super(props);
 
+    this.state = {
+      added: false,
+      clicked: false,
+      owned: false,
+      favorite: false,
+      wishlist: false,
+      lent: false,
+      borrowed: false,
+      removeOption: "",
+      removeMessage: "Add to Collection",
+      buttonIcon: "add",
+      heartIcon: "",
+      bookmarkIcon: "",
+      wishRibbon: "",
+      likeRibbon: ""
+    };
+
     let game = this.props.game.game.id;
     let userGames = this.props.user.user_games;
 
@@ -12,8 +29,8 @@ class GamesCard extends Component {
       userGames.map(userGame => {
         if (userGame.game.id === game) {
           this.state = {
-            clicked: false,
             added: false,
+            clicked: false,
             owned: userGame.info.owned,
             favorite: userGame.info.favorite,
             wishlist: userGame.info.wishlist,
@@ -29,23 +46,6 @@ class GamesCard extends Component {
           };
         }
       });
-    } else {
-      this.state = {
-        clicked: false,
-        added: false,
-        owned: false,
-        favorite: false,
-        wishlist: false,
-        lent: false,
-        borrowed: false,
-        removeOption: "",
-        removeMessage: "Add to Collection",
-        buttonIcon: "add",
-        heartIcon: "",
-        bookmarkIcon: "",
-        wishRibbon: "",
-        likeRibbon: ""
-      };
     }
   }
 
@@ -117,7 +117,7 @@ class GamesCard extends Component {
     if (this.state.heartIcon === "") {
       this.setState({
         heartIcon: "red",
-        likeRibbon: "ui red top left attached label"
+        likeRibbon: "ui red top right attached label"
       });
     }
 
@@ -169,7 +169,7 @@ class GamesCard extends Component {
     if (this.state.favorite === true) {
       this.setState({
         heartIcon: "red",
-        likeRibbon: "ui red top left attached label"
+        likeRibbon: "ui red top right attached label"
       });
     }
 
@@ -189,7 +189,6 @@ class GamesCard extends Component {
   };
 
   render() {
-    console.log(this.state);
     return (
       <div id="card">
         <div className="ui centered card">
@@ -244,7 +243,7 @@ class GamesCard extends Component {
             </div>
           ) : (
             <div className="extra content">
-              {this.state.likeRibbon === "ui red top left attached label" ? (
+              {this.state.likeRibbon === "ui red top right attached label" ? (
                 <div className={this.state.likeRibbon}>
                   <span>Favorite</span>
                 </div>
