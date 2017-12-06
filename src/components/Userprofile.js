@@ -2,6 +2,7 @@ import React from "react";
 import GamesList from "./GamesList.js";
 import FriendButton from "./FriendButton.js";
 import GamesCard from "./GamesCard.js";
+import { withRouter } from "react-router-dom";
 
 class UserProfile extends React.Component {
   constructor() {
@@ -25,6 +26,7 @@ class UserProfile extends React.Component {
 
   render() {
     if (!this.props.user.user_info) {
+      this.props.history.push(`/login`);
       return <div>loading...</div>;
     }
     return (
@@ -68,7 +70,6 @@ class UserProfile extends React.Component {
               user={this.props.user}
               attributePost={this.props.attributePost}
             />
-
           </div>
         </div>
         <div className="ui segment" id="profileGrey">
@@ -96,4 +97,4 @@ class UserProfile extends React.Component {
   }
 }
 
-export default UserProfile;
+export default withRouter(UserProfile);

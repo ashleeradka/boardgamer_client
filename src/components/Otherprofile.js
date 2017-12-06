@@ -43,13 +43,9 @@ class OtherProfile extends React.Component {
       gameInfo => gameInfo.game.id
     );
     if (this.props.user.user_games !== undefined) {
-      return this.props.user.user_games
-        .filter(game => {
-          return profileGameIds.includes(game.game.id);
-        })
-        .filter(game =>
-          game.game.name.toLowerCase().includes(this.props.searchTerm)
-        );
+      return this.props.user.user_games.filter(game => {
+        return profileGameIds.includes(game.game.id);
+      });
     }
     return [];
   }
@@ -59,13 +55,9 @@ class OtherProfile extends React.Component {
       let profileGameIds = this.props.user.user_games.map(
         gameInfo => gameInfo.game.id
       );
-      return this.state.user.boardgames
-        .filter(game => {
-          return !profileGameIds.includes(game.game.id);
-        })
-        .filter(game =>
-          game.game.name.toLowerCase().includes(this.props.searchTerm)
-        );
+      return this.state.user.boardgames.filter(game => {
+        return !profileGameIds.includes(game.game.id);
+      });
     }
     return [];
   }
