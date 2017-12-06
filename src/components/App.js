@@ -11,6 +11,7 @@ import { Route, Switch, Redirect, withRouter } from "react-router-dom";
 import CreateUser from "./CreateUser";
 import UserProfile from "./Userprofile";
 import OtherProfile from "./Otherprofile";
+import UsersList from "./UsersList.js";
 
 const url = "http://localhost:3001/api/v1";
 const postUrl = "http://localhost:3001/api/v1/users/1/createboardgame";
@@ -43,6 +44,11 @@ class App extends Component {
     fetch(`${url}/boardgames`)
       .then(res => res.json())
       .then(json => {
+        json.sort(function(a, b) {
+          if (a.game.name.toLowerCase() < b.game.name.toLowerCase()) return -1;
+          if (a.game.name.toLowerCase() > b.game.name.toLowerCase()) return 1;
+          return 0;
+        });
         this.setState({ games: json });
       });
   };
@@ -157,26 +163,6 @@ class App extends Component {
     }
   };
 
-  // userCollection = userId => {
-  //   fetch(`${url}/users/${userId}`)
-  //     .then(res => res.json())
-  //     .then(json => this.handleCollection(json));
-  // };
-  //
-  // handleCollection = json => {
-  //   this.setState(
-  //     {
-  //       user_games: json
-  //     },
-  //     json => this.getUserCollection()
-  //   );
-  // };
-  //
-  // getUserCollection = () => {
-  //   return this.state.user_games;
-  // };
-  // END
-
   getUserGames = () => {
     let games = [];
     if (this.state.authorization.isLoggedIn) {
@@ -246,6 +232,22 @@ class App extends Component {
     this.getGames();
   }
 
+  addFriend = (user, friendBool) => {
+    console.log(friendBool);
+    fetch("http://localhost:3001/api/v1/addOrRemoveFriend", {
+      method: "POST",
+      headers: new Headers({
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      }),
+      body: JSON.stringify({
+        friend_id: user.user.id,
+        user_id: this.state.authorization.user.user_info.id,
+        removing: friendBool
+      })
+    }).then(resp => this.checkResp(resp));
+  };
+
   render() {
     return (
       <div className="App">
@@ -288,7 +290,11 @@ class App extends Component {
                 user={this.state.authorization.user}
                 onAddGame={this.handleAddToCollection.bind(this)}
                 onRemoveGame={this.handleRemoveFromCollection.bind(this)}
+
+                onAddFriend={this.addFriend.bind(this)}
+
                 attributePost={this.attributePost.bind(this)}
+
               />
             );
           }}
@@ -332,21 +338,13 @@ class App extends Component {
             />
           )}
         />
+        <Route
+          path="/users"
+          render={() => <UsersList user={this.state.authorization.user} />}
+        />
       </div>
     );
   }
 }
 
 export default withRouter(App);
-
-// DEAD CODE USE IF NECESSARY
-// <Route
-//   path="/mygames"
-//   render={() => (
-//     <UserCollection
-//       user={this.state.authorization.user}
-//       userCollection={() => this.userCollection.bind(this)}
-//       games={this.getUserCollection()}
-//     />
-//   )}
-// />
