@@ -10,6 +10,7 @@ const GamesList = props => {
         onAddGame={props.onAddGame}
         onRemoveGame={props.onRemoveGame}
         key={game.game.id}
+        attributePost={props.attributePost}
       />
     );
   });

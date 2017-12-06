@@ -228,10 +228,22 @@ class App extends Component {
     }
   }
 
+  attributePost(body) {
+    fetch("http://localhost:3001/api/v1/updateattribute", {
+      method: "POST",
+      headers: new Headers({
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      }),
+      body: JSON.stringify(body)
+    }).then(resp => this.checkResp(resp));
+  }
+
   checkResp(resp) {
-    console.log(resp);
-    this.fetchGames();
     this.findCurrentUser();
+    this.fetchGames();
+    this.getUserGames();
+    this.getGames();
   }
 
   render() {
@@ -254,6 +266,7 @@ class App extends Component {
               user={this.state.authorization.user}
               onAddGame={this.handleAddToCollection.bind(this)}
               onRemoveGame={this.handleRemoveFromCollection.bind(this)}
+              attributePost={this.attributePost.bind(this)}
             />
           )}
         />
@@ -275,6 +288,7 @@ class App extends Component {
                 user={this.state.authorization.user}
                 onAddGame={this.handleAddToCollection.bind(this)}
                 onRemoveGame={this.handleRemoveFromCollection.bind(this)}
+                attributePost={this.attributePost.bind(this)}
               />
             );
           }}
@@ -302,6 +316,7 @@ class App extends Component {
               user={this.state.authorization.user}
               onAddGame={this.handleAddToCollection.bind(this)}
               onRemoveGame={this.handleRemoveFromCollection.bind(this)}
+              attributePost={this.attributePost.bind(this)}
             />
           )}
         />
@@ -313,6 +328,7 @@ class App extends Component {
               games={this.getUserGames()}
               onAddGame={this.handleAddToCollection.bind(this)}
               onRemoveGame={this.handleRemoveFromCollection.bind(this)}
+              attributePost={this.attributePost.bind(this)}
             />
           )}
         />

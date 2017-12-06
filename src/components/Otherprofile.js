@@ -24,7 +24,7 @@ class OtherProfile extends React.Component {
     let profileGameIds = this.state.user.boardgames.map(
       gameInfo => gameInfo.game.id
     );
-    if (this.props.user.user_games != undefined) {
+    if (this.props.user.user_games !== undefined) {
       return this.props.user.user_games.filter(game => {
         return profileGameIds.includes(game.game.id);
       });

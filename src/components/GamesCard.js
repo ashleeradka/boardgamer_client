@@ -5,22 +5,48 @@ class GamesCard extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      clicked: false,
-      added: false,
-      owned: false,
-      favorite: false,
-      wishlist: false,
-      lent: false,
-      borrowed: false,
-      removeOption: "",
-      removeMessage: "Add to Collection",
-      buttonIcon: "add",
-      heartIcon: "",
-      bookmarkIcon: "",
-      wishRibbon: "",
-      likeRibbon: ""
-    };
+    let game = this.props.game.game.id;
+    let userGames = this.props.user.user_games;
+
+    if (userGames) {
+      userGames.map(userGame => {
+        if (userGame.game.id === game) {
+          this.state = {
+            clicked: false,
+            added: false,
+            owned: userGame.info.owned,
+            favorite: userGame.info.favorite,
+            wishlist: userGame.info.wishlist,
+            lent: userGame.info.lent,
+            borrowed: userGame.info.borrowed,
+            removeOption: "",
+            removeMessage: "Add to Collection",
+            buttonIcon: "add",
+            heartIcon: "",
+            bookmarkIcon: "",
+            wishRibbon: "",
+            likeRibbon: ""
+          };
+        }
+      });
+    } else {
+      this.state = {
+        clicked: false,
+        added: false,
+        owned: false,
+        favorite: false,
+        wishlist: false,
+        lent: false,
+        borrowed: false,
+        removeOption: "",
+        removeMessage: "Add to Collection",
+        buttonIcon: "add",
+        heartIcon: "",
+        bookmarkIcon: "",
+        wishRibbon: "",
+        likeRibbon: ""
+      };
+    }
   }
 
   handleBooleanStates = () => {
@@ -38,11 +64,16 @@ class GamesCard extends Component {
               lent: userGame.info.lent,
               borrowed: userGame.info.borrowed
             },
-            this.updateButton
+            this.updateButton()
           );
         }
       });
     }
+  };
+
+  componentWillReceiveProps = nextProps => {
+    this.handleBooleanStates();
+    // window.location.reload();
   };
 
   handleClick = e => {
@@ -57,7 +88,7 @@ class GamesCard extends Component {
       this.removeFromCollection();
     } else {
       this.props.onAddGame(this.props.game);
-      this.setState({ added: true });
+      this.setState({ added: true, bookmarkIcon: "" });
     }
   };
 
@@ -72,51 +103,50 @@ class GamesCard extends Component {
   };
 
   handleLike = e => {
-    if (this.state.heartIcon === "red") {
-      this.setState({
-        heartIcon: ""
-      });
-    } else {
-      this.setState({
-        heartIcon: "red"
-      });
-    }
-
     let body = {
       attribute: "favorite",
       user: this.props.user.user_info.id,
       game: this.props.game.game.id
     };
-    this.attributePost(body);
+    if (this.state.heartIcon === "red") {
+      this.setState({
+        heartIcon: "",
+        likeRibbon: ""
+      });
+    }
+    if (this.state.heartIcon === "") {
+      this.setState({
+        heartIcon: "red",
+        likeRibbon: "ui red top left attached label"
+      });
+    }
+
+    this.sendToPost(body);
   };
 
   handleWish = e => {
-    if (this.state.bookmarkIcon === "yellow") {
-      this.setState({
-        bookmarkIcon: ""
-      });
-    } else {
-      this.setState({
-        bookmarkIcon: "yellow"
-      });
-    }
     let body = {
       attribute: "wishlist",
       user: this.props.user.user_info.id,
       game: this.props.game.game.id
     };
-    this.attributePost(body);
+    if (this.state.bookmarkIcon === "yellow") {
+      this.setState({
+        bookmarkIcon: "",
+        wishRibbon: ""
+      });
+    }
+    if (this.state.bookmarkIcon === "") {
+      this.setState({
+        bookmarkIcon: "yellow",
+        wishRibbon: "ui yellow bottom left attached label"
+      });
+    }
+    this.sendToPost(body);
   };
 
-  attributePost = body => {
-    fetch("http://localhost:3001/api/v1/updateattribute", {
-      method: "POST",
-      headers: new Headers({
-        Accept: "application/json",
-        "Content-Type": "application/json"
-      }),
-      body: JSON.stringify(body)
-    }).then(resp => this.handleBooleanStates());
+  sendToPost = body => {
+    this.props.attributePost(body);
   };
 
   redirectToShow = () => {
@@ -149,9 +179,17 @@ class GamesCard extends Component {
         wishRibbon: "ui yellow bottom left attached label"
       });
     }
+
+    if (this.state.owned === true) {
+      this.setState({
+        bookmarkIcon: "",
+        wishRibbon: ""
+      });
+    }
   };
 
   render() {
+    console.log(this.state);
     return (
       <div id="card">
         <div className="ui centered card">
@@ -165,8 +203,9 @@ class GamesCard extends Component {
                 onClick={this.handleLike.bind(this)}
               />
               <i
-                className={`right floated bookmark icon ${this.state
-                  .bookmarkIcon}`}
+                className={`right floated bookmark icon ${
+                  this.state.bookmarkIcon
+                }`}
                 onClick={this.handleWish.bind(this)}
               />
               <div className="left floated meta">
@@ -212,8 +251,9 @@ class GamesCard extends Component {
               ) : null}
               <div
                 onClick={this.handleAddToCollection}
-                className={`ui bottom attached button ${this.state
-                  .removeOption}`}
+                className={`ui bottom attached button ${
+                  this.state.removeOption
+                }`}
               >
                 <i className={`${this.state.buttonIcon} icon`} />
                 {this.state.removeMessage}
