@@ -42,7 +42,7 @@ class UserProfile extends React.Component {
             <h4 className="ui center aligned header">Friends</h4>
             <div className="ui middle aligned selection list">
               {this.props.user.friends.map(friend => (
-                <FriendButton friend={friend} />
+                <FriendButton friend={friend} user={this.props.user} />
               ))}
             </div>
           </div>

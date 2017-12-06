@@ -7,7 +7,8 @@ class OtherProfile extends React.Component {
   constructor() {
     super();
     this.state = {
-      user: {}
+      user: {},
+      isFriend: false
     };
   }
 
@@ -16,8 +17,25 @@ class OtherProfile extends React.Component {
       .then(resp => resp.json())
       .then(json => {
         this.setState({ user: json });
-        console.log(this.state);
-      });
+      })
+      .then(() => this.isAFriend());
+  }
+
+  componentWillRecieveProps() {
+    this.isAFriend();
+  }
+
+  isAFriend() {
+    if (this.userFriendIds().includes(this.state.user.user.id)) {
+      this.setState({ isFriend: true });
+    }
+  }
+
+  userFriendIds() {
+    if (this.props.user.friends != undefined) {
+      return this.props.user.friends.map(friend => friend.id);
+    }
+    return [];
   }
 
   sharedGames() {
@@ -44,9 +62,13 @@ class OtherProfile extends React.Component {
     return [];
   }
 
+  handleAddFriend() {
+    this.setState({ isFriend: !this.state.isFriend });
+    this.props.onAddFriend(this.state.user, this.state.isFriend);
+  }
+
   render() {
-    console.log(this.props);
-    console.log(this.state.user);
+    console.log(this.state);
     if (this.state.user.user === undefined) {
       return <div>Loading</div>;
     }
@@ -63,6 +85,30 @@ class OtherProfile extends React.Component {
           className="ui centered medium image"
           src={this.state.user.user.profile_image_url}
         />{" "}
+        <div>
+          {this.state.isFriend ? (
+            <div>
+              <button
+                className="ui active button"
+                onClick={this.handleAddFriend.bind(this)}
+              >
+                <i className="user icon" />
+                Remove Friend
+              </button>
+            </div>
+          ) : (
+            <div>
+              {" "}
+              <button
+                className="ui active button"
+                onClick={this.handleAddFriend.bind(this)}
+              >
+                <i className="user icon" />
+                Add friend
+              </button>
+            </div>
+          )}
+        </div>
         <br />
         <div className="ui segment">
           <h4 className="ui center aligned header">Shared Games</h4>

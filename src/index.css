@@ -37,3 +37,7 @@ form {
   width: 45%;
   margin: auto;
 }
+
+#navbar {
+  background-color: teal;
+}
