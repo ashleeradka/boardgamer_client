@@ -182,9 +182,7 @@ class App extends Component {
         games.push(gameInfo[0]);
       });
     }
-    return games.filter(game =>
-      game.game.name.toLowerCase().includes(this.state.searchTerm.toLowerCase())
-    );
+    return games;
   };
 
   handleAddToCollection(e) {
@@ -346,7 +344,7 @@ class App extends Component {
               onAddGame={this.handleAddToCollection.bind(this)}
               onRemoveGame={this.handleRemoveFromCollection.bind(this)}
               attributePost={this.attributePost.bind(this)}
-              searchTerm={this.state.search}
+              searchTerm={this.state.searchTerm}
             />
           )}
         />

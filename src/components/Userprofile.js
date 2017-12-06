@@ -19,7 +19,8 @@ class UserProfile extends React.Component {
     return this.props.user.user_games.filter(
       game =>
         game.info[category] === true &&
-        this.getUserGameIds().includes(game.game.id)
+        this.getUserGameIds().includes(game.game.id) &&
+        game.name.toLowerCase().includes(this.state.searchTerm.toLowerCase())
     );
   }
 
