@@ -25,7 +25,7 @@ class Login extends Component {
   };
 
   redirectToCreateUser = () => {
-    this.props.history.push(`/user/new`);
+    this.props.history.push(`/new`);
   };
 
   render() {

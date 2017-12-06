@@ -9,7 +9,7 @@ class UsersList extends React.Component {
     };
   }
   componentDidMount() {
-    fetch("http://localhost:3001/api/v1/users")
+    fetch("https://api-boardgamer.herokuapp.com/api/v1/users")
       .then(resp => resp.json())
       .then(json => {
         json.sort(function(a, b) {

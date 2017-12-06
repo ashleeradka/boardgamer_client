@@ -1,7 +1,7 @@
 import React from "react";
 import GamesList from "./GamesList.js";
 
-const url = "http://localhost:3001/api/v1";
+const url = "https://api-boardgamer.herokuapp.com/api/v1";
 
 class OtherProfile extends React.Component {
   constructor() {
