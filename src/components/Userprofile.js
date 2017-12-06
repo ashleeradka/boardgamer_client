@@ -8,7 +8,8 @@ class UserProfile extends React.Component {
     super();
     this.state = {
       owned: [],
-      wishlist: []
+      wishlist: [],
+      imgClass: "ui centered segment medium image"
     };
   }
 
@@ -21,6 +22,14 @@ class UserProfile extends React.Component {
         game.info[category] === true &&
         this.getUserGameIds().includes(game.game.id)
     );
+  }
+
+  onImgEnter() {
+    this.setState({ imgClass: "ui centered secondary segment medium image" });
+  }
+
+  onImgLeave() {
+    this.setState({ imgClass: "ui centered segment medium image" });
   }
 
   render() {
@@ -38,7 +47,9 @@ class UserProfile extends React.Component {
         <br />
 
         <img
-          className="ui centered segment medium image"
+          onMouseEnter={this.onImgEnter.bind(this)}
+          onMouseLeave={this.onImgLeave.bind(this)}
+          className={this.state.imgClass}
           src={
             this.props.user.user_info.profile_image_url
               ? this.props.user.user_info.profile_image_url
