@@ -189,6 +189,7 @@ class GamesCard extends Component {
   };
 
   render() {
+    console.log(this.props.game.game.image_url);
     return (
       <div id="card">
         <div className="ui centered card">
@@ -202,8 +203,9 @@ class GamesCard extends Component {
                 onClick={this.handleLike.bind(this)}
               />
               <i
-                className={`right floated bookmark icon ${this.state
-                  .bookmarkIcon}`}
+                className={`right floated bookmark icon ${
+                  this.state.bookmarkIcon
+                }`}
                 onClick={this.handleWish.bind(this)}
               />
               <div className="left floated meta">
@@ -230,7 +232,13 @@ class GamesCard extends Component {
               className="ui centered content fluid image"
               onClick={this.handleClick.bind(this)}
             >
-              <img src={this.props.game.game.image_url} />
+              <img
+                src={
+                  this.props.game.game.image_url
+                    ? this.props.game.game.image_url
+                    : "http://bottegarotolo.com.au/plugins/woocommerce/assets/images/placeholder.png"
+                }
+              />
             </div>
           )}
           {this.state.added ? (
@@ -249,8 +257,9 @@ class GamesCard extends Component {
               ) : null}
               <div
                 onClick={this.handleAddToCollection}
-                className={`ui bottom attached button ${this.state
-                  .removeOption}`}
+                className={`ui bottom attached button ${
+                  this.state.removeOption
+                }`}
               >
                 <i className={`${this.state.buttonIcon} icon`} />
                 {this.state.removeMessage}
