@@ -7,22 +7,24 @@ class FriendButton extends React.Component {
   }
 
   handleRedirect() {
-    this.props.history.push(`/user/${this.props.friend.id}`);
+    if (this.props.user.user_info.id === this.props.friend.id) {
+      this.props.history.push(`/myprofile`);
+    } else {
+      this.props.history.push(`/user/${this.props.friend.id}`);
+    }
   }
 
   render() {
     return (
-      <div onClick={this.handleRedirect.bind(this)}>
+      <button className="ui button" onClick={this.handleRedirect.bind(this)}>
         <div className="item">
           <img
             className="ui avatar image"
             src={this.props.friend.profile_image_url}
           />
-          <div className="content">
-            <div className="header">{this.props.friend.username}</div>
-          </div>
+          {this.props.friend.username}
         </div>
-      </div>
+      </button>
     );
   }
 }

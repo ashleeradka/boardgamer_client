@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 const Navbar = props => {
   const userInfo = props.userInfo;
   return (
-    <div className="ui secondary  menu">
+    <div className="ui secondary teal menu" id="navbar">
       <Link to="/" className="item">
         Home
       </Link>
@@ -20,8 +20,8 @@ const Navbar = props => {
       ) : null}
 
       {userInfo.isLoggedIn ? (
-        <Link to="/friends" className="item">
-          Friends
+        <Link to="/users" className="item">
+          Users
         </Link>
       ) : null}
 
