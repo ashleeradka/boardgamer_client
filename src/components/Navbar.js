@@ -10,7 +10,7 @@ const Navbar = props => {
         <i className="inverted large puzzle icon" />
       </div>
       <Link to="/" className="item">
-        <nav>Home</nav>
+        <nav>Browse Games</nav>
       </Link>
       {userInfo.isLoggedIn ? (
         <Link to="/myprofile" className="item">

@@ -62,7 +62,6 @@ class UserProfile extends React.Component {
 
   render() {
     if (!this.props.user.user_info) {
-      this.props.history.push(`/login`);
       return <div>loading...</div>;
     }
     return (
