@@ -116,6 +116,7 @@ class OtherProfile extends React.Component {
             onRemoveGame={this.props.onRemoveGame}
             games={this.sharedGames()}
             user={this.props.user}
+            attributePost={this.props.attributePost}
           />
         </div>
         <div className="ui segment">
@@ -125,6 +126,7 @@ class OtherProfile extends React.Component {
             onRemoveGame={this.props.onRemoveGame}
             games={this.nonSharedGames()}
             user={this.props.user}
+            attributePost={this.props.attributePost}
           />
         </div>
       </div>
