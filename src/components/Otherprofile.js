@@ -43,9 +43,13 @@ class OtherProfile extends React.Component {
       gameInfo => gameInfo.game.id
     );
     if (this.props.user.user_games !== undefined) {
-      return this.props.user.user_games.filter(game => {
-        return profileGameIds.includes(game.game.id);
-      });
+      return this.props.user.user_games
+        .filter(game => {
+          return profileGameIds.includes(game.game.id);
+        })
+        .filter(game =>
+          game.game.name.toLowerCase().includes(this.props.searchTerm)
+        );
     }
     return [];
   }
@@ -55,9 +59,13 @@ class OtherProfile extends React.Component {
       let profileGameIds = this.props.user.user_games.map(
         gameInfo => gameInfo.game.id
       );
-      return this.state.user.boardgames.filter(game => {
-        return !profileGameIds.includes(game.game.id);
-      });
+      return this.state.user.boardgames
+        .filter(game => {
+          return !profileGameIds.includes(game.game.id);
+        })
+        .filter(game =>
+          game.game.name.toLowerCase().includes(this.props.searchTerm)
+        );
     }
     return [];
   }
@@ -88,10 +96,10 @@ class OtherProfile extends React.Component {
           {this.state.isFriend ? (
             <div>
               <button
-                className="ui active button"
+                className="ui active button red"
                 onClick={this.handleAddFriend.bind(this)}
               >
-                <i className="user icon" />
+                <i className="user icon white" />
                 Remove Friend
               </button>
             </div>
@@ -99,17 +107,17 @@ class OtherProfile extends React.Component {
             <div>
               {" "}
               <button
-                className="ui active button"
+                className="ui active button green"
                 onClick={this.handleAddFriend.bind(this)}
               >
-                <i className="user icon" />
+                <i className="user icon white" />
                 Add friend
               </button>
             </div>
           )}
         </div>
         <br />
-        <div className="ui segment">
+        <div className="ui segment" id="profileGreyed">
           <h4 className="ui center aligned header">Shared Games</h4>
           <GamesList
             onAddGame={this.props.onAddGame}
@@ -119,7 +127,7 @@ class OtherProfile extends React.Component {
             attributePost={this.props.attributePost}
           />
         </div>
-        <div className="ui segment">
+        <div className="ui segment" id="profileGreyed">
           <h4 className="ui center aligned header">Unique Games</h4>
           <GamesList
             onAddGame={this.props.onAddGame}

@@ -39,5 +39,13 @@ form {
 }
 
 #navbar {
-  background-color: teal;
+  background-color: #2d65ff;
+}
+
+nav {
+  color: white;
+}
+
+#profileGreyed {
+  background-color: rgba(45, 101, 255, 0.01);
 }

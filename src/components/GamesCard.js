@@ -202,9 +202,8 @@ class GamesCard extends Component {
                 onClick={this.handleLike.bind(this)}
               />
               <i
-                className={`right floated bookmark icon ${
-                  this.state.bookmarkIcon
-                }`}
+                className={`right floated bookmark icon ${this.state
+                  .bookmarkIcon}`}
                 onClick={this.handleWish.bind(this)}
               />
               <div className="left floated meta">
@@ -250,9 +249,8 @@ class GamesCard extends Component {
               ) : null}
               <div
                 onClick={this.handleAddToCollection}
-                className={`ui bottom attached button ${
-                  this.state.removeOption
-                }`}
+                className={`ui bottom attached button ${this.state
+                  .removeOption}`}
               >
                 <i className={`${this.state.buttonIcon} icon`} />
                 {this.state.removeMessage}
