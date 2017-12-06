@@ -5,29 +5,33 @@ const Navbar = props => {
   const userInfo = props.userInfo;
   return (
     <div className="ui secondary teal menu" id="navbar">
+      {""}
+      <div className="item">
+        <i className="inverted large puzzle icon" />
+      </div>
       <Link to="/" className="item">
-        Home
+        <nav>Home</nav>
       </Link>
       {userInfo.isLoggedIn ? (
         <Link to="/myprofile" className="item">
-          My Profile
+          <nav>My Profile</nav>
         </Link>
       ) : null}
       {userInfo.isLoggedIn ? (
         <Link to="/mygames" className="item">
-          My Games
+          <nav>My Games</nav>
         </Link>
       ) : null}
 
       {userInfo.isLoggedIn ? (
         <Link to="/users" className="item">
-          Users
+          <nav>Users</nav>
         </Link>
       ) : null}
 
       {userInfo.isLoggedIn ? (
         <Link to="/createGame" className="item">
-          Add new game
+          <nav>Add new game</nav>
         </Link>
       ) : null}
       <div className="right menu">
@@ -48,12 +52,12 @@ const Navbar = props => {
                 props.handleLogout();
               }}
             >
-              Logout
+              <nav>Logout</nav>
             </div>
           </a>
         ) : (
           <Link to="/login" className="item">
-            Login
+            <nav>Login</nav>
           </Link>
         )}
       </div>

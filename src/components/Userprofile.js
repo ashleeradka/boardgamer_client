@@ -12,9 +12,14 @@ class UserProfile extends React.Component {
     };
   }
 
+  getUserGameIds() {
+    return this.props.games.map(game => game.game.id);
+  }
   getGames(category) {
     return this.props.user.user_games.filter(
-      game => game.info[category] === true
+      game =>
+        game.info[category] === true &&
+        this.getUserGameIds().includes(game.game.id)
     );
   }
 
@@ -42,61 +47,49 @@ class UserProfile extends React.Component {
         />
 
         <br />
-        <div className="ui horizontal segments">
-          <div className="ui segment">
-            <h4 className="ui center aligned header">Friends</h4>
-            <div className="ui middle aligned selection list">
-              {this.props.user.friends.map(friend => (
-                <FriendButton
-                  key={friend.id}
-                  friend={friend}
-                  user={this.props.user}
-                />
-              ))}
-            </div>
-          </div>
-          <div className="ui compact segment">
+        <div className="ui segment" id="profileGreyed">
+          <h4 className="ui center aligned header">Friends</h4>
+          {this.props.user.friends.map(friend => (
+            <FriendButton
+              key={friend.id}
+              friend={friend}
+              user={this.props.user}
+            />
+          ))}
+        </div>
+        <div className="ui segment" id="profileGreyed">
+          <div className="profileGreyed">
             <h4 className="ui center aligned header">Owned</h4>
-            {this.getGames("owned").map(game => (
-              <GamesCard
-                user={this.props.user}
-                onAddGame={this.props.onAddGame}
-                onRemoveGame={this.props.onRemoveGame}
-                game={game}
-                key={game.game.id}
-                attributePost={this.props.attributePost}
-              />
-            ))}
+
+            <GamesList
+              onAddGame={this.props.onAddGame}
+              onRemoveGame={this.props.onRemoveGame}
+              games={this.getGames("owned")}
+              user={this.props.user}
+              attributePost={this.props.attributePost}
+            />
+
           </div>
-          <div className="ui compact segment">
-            <h4 className="ui center aligned header">Liked</h4>
-            {this.getGames("favorite").map(
-              game =>
-                !game.info.owned && !game.info.wishlist ? (
-                  <GamesCard
-                    user={this.props.user}
-                    onAddGame={this.props.onAddGame}
-                    onRemoveGame={this.props.onRemoveGame}
-                    game={game}
-                    key={game.game.id}
-                    attributePost={this.props.attributePost}
-                  />
-                ) : null
-            )}
-          </div>
-          <div className="ui compact segment">
-            <h4 className="ui center aligned header">Wishlist</h4>
-            {this.getGames("wishlist").map(game => (
-              <GamesCard
-                user={this.props.user}
-                onAddGame={this.props.onAddGame}
-                onRemoveGame={this.props.onRemoveGame}
-                game={game}
-                key={game.game.id}
-                attributePost={this.props.attributePost}
-              />
-            ))}
-          </div>
+        </div>
+        <div className="ui segment" id="profileGrey">
+          <h4 className="ui center aligned header">Wish List</h4>
+          <GamesList
+            onAddGame={this.props.onAddGame}
+            onRemoveGame={this.props.onRemoveGame}
+            games={this.getGames("wishlist")}
+            user={this.props.user}
+            attributePost={this.props.attributePost}
+          />
+        </div>
+        <div className="ui segment" id="profileGrey">
+          <h4 className="ui center aligned header">Favorited</h4>
+          <GamesList
+            onAddGame={this.props.onAddGame}
+            onRemoveGame={this.props.onRemoveGame}
+            games={this.getGames("favorite")}
+            user={this.props.user}
+            attributePost={this.props.attributePost}
+          />
         </div>
       </div>
     );

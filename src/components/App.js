@@ -56,9 +56,14 @@ class App extends Component {
   };
 
   getGames = () => {
-    return this.state.games.filter(game =>
+    let games = this.state.games.filter(game =>
       game.game.name.toLowerCase().includes(this.state.searchTerm.toLowerCase())
     );
+    return games.sort(function(a, b) {
+      if (a.game.name.toLowerCase() < b.game.name.toLowerCase()) return -1;
+      if (a.game.name.toLowerCase() > b.game.name.toLowerCase()) return 1;
+      return 0;
+    });
   };
 
   handleSearch = e => {
@@ -177,7 +182,9 @@ class App extends Component {
         games.push(gameInfo[0]);
       });
     }
-    return games;
+    return games.filter(game =>
+      game.game.name.toLowerCase().includes(this.state.searchTerm.toLowerCase())
+    );
   };
 
   handleAddToCollection(e) {
@@ -264,13 +271,15 @@ class App extends Component {
           exact
           path="/"
           render={() => (
-            <GamesList
-              games={this.getGames()}
-              user={this.state.authorization.user}
-              onAddGame={this.handleAddToCollection.bind(this)}
-              onRemoveGame={this.handleRemoveFromCollection.bind(this)}
-              attributePost={this.attributePost.bind(this)}
-            />
+            <div id="profileGreyed">
+              <GamesList
+                games={this.getGames()}
+                user={this.state.authorization.user}
+                onAddGame={this.handleAddToCollection.bind(this)}
+                onRemoveGame={this.handleRemoveFromCollection.bind(this)}
+                attributePost={this.attributePost.bind(this)}
+              />
+            </div>
           )}
         />
         <Route
@@ -299,6 +308,7 @@ class App extends Component {
                 onRemoveGame={this.handleRemoveFromCollection.bind(this)}
                 onAddFriend={this.addFriend.bind(this)}
                 attributePost={this.attributePost.bind(this)}
+                searchTerm={this.state.searchTerm}
               />
             );
           }}
@@ -336,6 +346,7 @@ class App extends Component {
               onAddGame={this.handleAddToCollection.bind(this)}
               onRemoveGame={this.handleRemoveFromCollection.bind(this)}
               attributePost={this.attributePost.bind(this)}
+              searchTerm={this.state.search}
             />
           )}
         />
