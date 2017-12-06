@@ -374,7 +374,12 @@ class App extends Component {
         />
         <Route
           path="/users"
-          render={() => <UsersList user={this.state.authorization.user} />}
+          render={() => (
+            <UsersList
+              loggedIn={this.state.authorization.isLoggedIn}
+              user={this.state.authorization.user}
+            />
+          )}
         />
       </div>
     );
