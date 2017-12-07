@@ -43,7 +43,8 @@ class GamesCard extends Component {
             heartIcon: "",
             bookmarkIcon: "",
             wishRibbon: "",
-            likeRibbon: ""
+            likeRibbon: "",
+            imgClass: ""
           };
         }
       });
