@@ -19,7 +19,8 @@ class GamesCard extends Component {
       heartIcon: "",
       bookmarkIcon: "",
       wishRibbon: "",
-      likeRibbon: ""
+      likeRibbon: "",
+      imgClass: ""
     };
 
     let game = this.props.game.game.id;
@@ -188,6 +189,16 @@ class GamesCard extends Component {
     }
   };
 
+  onImgEnter() {
+    this.setState({
+      imgClass: "dull"
+    });
+  }
+
+  onImgLeave() {
+    this.setState({ imgClass: "" });
+  }
+
   render() {
     return (
       <div id="card">
@@ -232,6 +243,9 @@ class GamesCard extends Component {
               onClick={this.handleClick.bind(this)}
             >
               <img
+                className={this.state.imgClass}
+                onMouseEnter={this.onImgEnter.bind(this)}
+                onMouseLeave={this.onImgLeave.bind(this)}
                 src={
                   this.props.game.game.image_url
                     ? this.props.game.game.image_url
