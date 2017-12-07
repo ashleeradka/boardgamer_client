@@ -181,7 +181,10 @@ class App extends Component {
 
   handleUserRedirect = json => {
     if (!json.error) {
+      this.setState({ error: "" });
       this.props.history.push(`/login`);
+    } else {
+      this.setState({ error: json.error });
     }
   };
 
