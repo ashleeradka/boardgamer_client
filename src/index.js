@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import App from "./components/App";
 import registerServiceWorker from "./registerServiceWorker";
-import "semantic-ui/dist/semantic.min.css";
+import "./semantic/dist/semantic.min.css";
 import "./index.css";
 import { BrowserRouter as Router } from "react-router-dom";
 
