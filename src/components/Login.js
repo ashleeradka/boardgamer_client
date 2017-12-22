@@ -21,11 +21,22 @@ class Login extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
+
     this.props.onLogin(this.state);
   };
 
   redirectToCreateUser = () => {
     this.props.history.push(`/new`);
+  };
+
+  setDemo = () => {
+    this.setState({
+      ...this.state,
+      fields: {
+        username: "demo",
+        password: "123"
+      }
+    });
   };
 
   render() {
@@ -56,6 +67,9 @@ class Login extends Component {
           </button>
           <a onClick={this.redirectToCreateUser.bind(this)}>
             New user? Create an account.
+          </a>
+          <a className="alignright" onClick={this.setDemo.bind(this)}>
+            Demo the App
           </a>
         </form>
       </div>

@@ -53,3 +53,7 @@ nav {
 .dull {
   opacity: 0.4;
 }
+
+.alignright {
+  float: right;
+}
