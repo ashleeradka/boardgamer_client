@@ -20,7 +20,11 @@ class FriendButton extends React.Component {
         <div className="item">
           <img
             className="ui avatar image"
-            src={this.props.friend.profile_image_url}
+            src={
+              this.props.friend.profile_image_url
+                ? this.props.friend.profile_image_url
+                : "https://www.menon.no/wp-content/uploads/person-placeholder.jpg"
+            }
           />
           {this.props.friend.username}
         </div>
