@@ -1,6 +1,6 @@
 # Boardgamer Client
 
-A web app for users who love board games to track their collection and see and share favorite games with friends. Check it out at https://boardgamer-app.herokuapp.com/login.
+A web app for users who love board games to track their collection and share favorite games with friends. Check it out at https://boardgamer-app.herokuapp.com/login.
 
 ## Built With
 * React
