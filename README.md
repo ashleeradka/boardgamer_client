@@ -6,7 +6,7 @@ A web app for users who love board games to track their collection and see and s
 * React
 * Redux
 * Semantic UI
-* Ruby on Rails for Backend API
+* [Backend API](https://github.com/ashleecrusco/boardgamer_backend)
 
 ## Authors
 * **Ashlee Crusco** - *Initial work* - [GitHub](https://github.com/ashleecrusco)
