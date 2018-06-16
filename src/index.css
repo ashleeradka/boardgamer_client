@@ -2,11 +2,12 @@ body {
   margin: 0;
   padding: 0;
   background-color: rgba(45, 101, 255, 0.01);
+  background-color: red;
   font-family: sans-serif;
 }
 
 div.content.fluid {
-  height: 340px;
+  max-height: 328px;
   width: 290px;
 }
 
@@ -56,4 +57,12 @@ nav {
 
 .alignright {
   float: right;
+}
+
+button.ui.button {
+  margin: 0.5%;
+}
+
+#root > div > div.ui.center.aligned.container > div > div.ui.huge.labels > a {
+  margin: 0.5%;
 }

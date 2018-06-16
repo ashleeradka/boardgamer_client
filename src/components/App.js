@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Navbar from "./Navbar";
-import "../App.css";
+import "../index.css";
 import GamesList from "./GamesList";
 import CreateGame from "./Creategame";
 import GameShowPage from "./GameShowPage.js";

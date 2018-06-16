@@ -1,4 +1,12 @@
 import React from "react";
+import {
+  Segment,
+  Button,
+  Image,
+  Label,
+  Header,
+  Container
+} from "semantic-ui-react";
 
 class GameShowPage extends React.Component {
   render() {
