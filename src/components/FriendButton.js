@@ -1,11 +1,8 @@
 import React from "react";
-import { Route, Switch, Redirect, withRouter } from "react-router-dom";
+import { withRouter } from "react-router-dom";
+import { Popup, Button, Image, Card, Label } from "semantic-ui-react";
 
 class FriendButton extends React.Component {
-  constructor() {
-    super();
-  }
-
   handleRedirect() {
     if (this.props.user.user_info.id === this.props.friend.id) {
       this.props.history.push(`/myprofile`);
@@ -16,19 +13,17 @@ class FriendButton extends React.Component {
 
   render() {
     return (
-      <button className="ui button" onClick={this.handleRedirect.bind(this)}>
-        <div className="item">
-          <img
-            className="ui avatar image"
-            src={
-              this.props.friend.profile_image_url
-                ? this.props.friend.profile_image_url
-                : "https://www.menon.no/wp-content/uploads/person-placeholder.jpg"
-            }
-          />
-          {this.props.friend.username}
-        </div>
-      </button>
+      <Label as="a" image onClick={this.handleRedirect.bind(this)}>
+        <img
+          src={
+            this.props.friend.profile_image_url
+              ? this.props.friend.profile_image_url
+              : "https://www.menon.no/wp-content/uploads/person-placeholder.jpg"
+          }
+          key={this.props.friend.id}
+        />
+        {this.props.friend.username}
+      </Label>
     );
   }
 }

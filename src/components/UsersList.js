@@ -1,6 +1,14 @@
 import React from "react";
 import FriendButton from "./FriendButton.js";
 import withAuth from "./WithAuth.js";
+import {
+  Segment,
+  Button,
+  Image,
+  Label,
+  Header,
+  Container
+} from "semantic-ui-react";
 
 class UsersList extends React.Component {
   constructor() {
@@ -23,18 +31,22 @@ class UsersList extends React.Component {
   }
   render() {
     return (
-      <div className="ui segment">
-        <h4 className="ui center aligned header">Users</h4>
-        <div className="ui middle aligned selection list">
-          {this.state.users.map(friend => (
-            <FriendButton
-              friend={friend}
-              user={this.props.user}
-              key={friend.id}
-            />
-          ))}
-        </div>
-      </div>
+      <Container textAlign="center">
+        <Segment>
+          <Header>Users</Header>{" "}
+        </Segment>{" "}
+        <Segment>
+          <Label.Group size="huge">
+            {this.state.users.map(friend => (
+              <FriendButton
+                friend={friend}
+                user={this.props.user}
+                key={friend.id}
+              />
+            ))}
+          </Label.Group>{" "}
+        </Segment>
+      </Container>
     );
   }
 }

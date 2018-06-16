@@ -1,12 +1,12 @@
-import React, { Component } from "react";
-import GamesCard from "./GamesCard";
+import React from 'react'
+import GamesCard from './GamesCard'
 
 const GamesList = props => {
   const gamesListCards = props.games
-    .sort(function(a, b) {
-      if (a.game.name.toLowerCase() < b.game.name.toLowerCase()) return -1;
-      if (a.game.name.toLowerCase() > b.game.name.toLowerCase()) return 1;
-      return 0;
+    .sort(function (a, b) {
+      if (a.game.name.toLowerCase() < b.game.name.toLowerCase()) return -1
+      if (a.game.name.toLowerCase() > b.game.name.toLowerCase()) return 1
+      return 0
     })
     .map(game => {
       return (
@@ -18,9 +18,9 @@ const GamesList = props => {
           key={game.game.id}
           attributePost={props.attributePost}
         />
-      );
-    });
-  return <div className="ui cards">{gamesListCards}</div>;
-};
+      )
+    })
+  return <div className='ui cards centered'>{gamesListCards}</div>
+}
 
-export default GamesList;
+export default GamesList

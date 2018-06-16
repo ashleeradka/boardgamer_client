@@ -7,13 +7,12 @@
     "node": "6.11.2"
   },
   "dependencies": {
-    "gh-pages": "^1.1.0",
-    "gulp-dependency-install": "0.0.8",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-router-dom": "^4.2.2",
     "react-scripts": "1.0.17",
-    "semantic-ui": "^2.2.13"
+    "semantic-ui": "^2.2.13",
+    "semantic-ui-react": "^0.81.1"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -22,8 +21,5 @@
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build"
-  },
-  "devDependencies": {
-    "gh-pages": "^1.1.0"
   }
 }
