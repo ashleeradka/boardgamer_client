@@ -15,4 +15,4 @@ A web app for users who love board games to track their collection and share fav
 ## License
 This project is licensed under the MIT License - see the [MIT License](http://choosealicense.com/licenses/mit/) file for details
 
-## Interested in contributing? Check out our [contributing guidelines](https://github.com/ashleecrusco/boardgamer_client/blob/master/CONTRIBUTING.md)
+***Interested in contributing? Check out our [contributing guidelines](https://github.com/ashleecrusco/boardgamer_client/blob/master/CONTRIBUTING.md).***
